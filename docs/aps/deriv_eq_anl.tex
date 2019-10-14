@@ -1,0 +1,341 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{APÊNDICE A - Derivação da Equação de Análise a partir da Função Custo Variacional Tridimensional}
+\label{apendiceI}
+
+Métodos variacionais como o 3DVar e sequenciais como a Interpolação Ótima, resolvem os mesmos problemas de otimização e pode-se mostrar que ambos são equivalentes. A derivação apresentada a seguir mostra que, a partir da função custo variacional tridimensional - em sua forma mais simples (i.e., sem considerar os termos de injunção das aplicações operacionais), é possível chegar à mesma equação de análise utilizada na Interpolação Ótima.
+
+Seja a Eq. \ref{apI_eq:1} a função custo variacional tridimensional:
+
+\begin{equation}
+  \label{apI_eq:1}
+  J(\mathbf{x}) = \frac{1}{2}(\mathbf{x} - \mathbf{x}^{b})^{T}\mathbf{B}^{-1}(\mathbf{x} - \mathbf{x}^{b}) + \frac{1}{2}[\mathbf{y}^{o} - \textit{H}(\mathbf{x})]^{T}\mathbf{R}^{-1}[\mathbf{y}^{o} - \textit{H}(\mathbf{x})]
+\end{equation}
+
+onde:
+
+\begin{itemize}
+  \item $\mathbf{x}$ é o vetor de estado a ser analisado;
+  \item $\mathbf{x}^{b}$ é o vetor de estado do background;
+  \item $\mathbf{B}$ é a matriz de covariâncias dos erros de background;
+  \item $\mathbf{y}^{o}$ é o vetor observação;
+  \item $\mathbf{R}$ é a matriz de covariâncias dos erros de observação;
+  \item $\textit{H}$ é o operador observação não linear.
+\end{itemize}
+
+Na Eq. \ref{apI_eq:1}, o termo $\mathbf{x} - \mathbf{x}^{b}$ representa o vetor incremento de análise e o termo $\mathbf{y}^{o} - \textit{H}(\mathbf{x})$ representa o vetor inovação.
+
+Para derivar a equação de análise a partir da Eq. \ref{apI_eq:1}, consideramos (por simplicidade) apenas uma observação e que o vetor incremento de análise é pequeno o suficiente para que possamos linearizar o operador observação:
+
+\begin{equation}
+  \label{apI_eq:2}
+ \mathbf{x} = \mathbf{x}^{b} + (\mathbf{x} - \mathbf{x}^{b})
+\end{equation}
+
+Ou seja, na Eq. \ref{apI_eq:2} expressamos que o vetor de estado a ser analisado (a análise) é igual ao vetor de estado do background somado ao incremento de análise. Substituindo $\mathbf{x}$ da Eq. \ref{apI_eq:2} na relação do vetor inovação:
+
+% \begin{equation}
+%   \label{apI_eq:3}
+%   \mathbf{y}^{o} - \textit{H}(\mathbf{x}) = \mathbf{y}^{o} - \textit{H}[\mathbf{x}^{b} + (\mathbf{x} - \mathbf{x}^{b})]
+% \end{equation}
+
+% \begin{equation}
+%   \label{apI_eq:4}
+%   \mathbf{y}^{o} - \textit{H}(\mathbf{x}) = \mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b}) - \textit{H}(\mathbf{x} - \mathbf{x}^{b})
+% \end{equation}
+
+\begin{align}
+  \label{apI_eq:3}
+  \mathbf{y}^{o} - \textit{H}(\mathbf{x}) & = \mathbf{y}^{o} - \textit{H}[\mathbf{x}^{b} + (\mathbf{x} - \mathbf{x}^{b})] \\
+  \label{apI_eq:4}
+  \mathbf{y}^{o} - \textit{H}(\mathbf{x}) & = \mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b}) - \textit{H}(\mathbf{x} - \mathbf{x}^{b})
+\end{align}
+
+Na Eq. \ref{apI_eq:4} o operador observação não linear $\textit{H}$ é aplicado sobre o incremento de análise $\mathbf{x} - \mathbf{x}^{b}$, o qual é muito pequeno. Sendo assim, considera-se que o operador observação a ser aplicado sobre o incremento de análise pode ser linearizado. Isto significa que pequenas variações do vetor incremento de análise fazem com que $\textit{H}$ varie muito pouco. Portanto, a Eq. \ref{apI_eq:4} pode ser reescrita como:
+
+\begin{equation}
+  \label{apI_eq:5}
+  \mathbf{y}^{o} - \textit{H}(\mathbf{x}) = \mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b}) - \mathbf{H}(\mathbf{x} - \mathbf{x}^{b})
+\end{equation}
+
+onde:
+
+\begin{itemize}
+  \item $\mathbf{H}$ é a versão linearizada do operador observação não linear, $\textit{H}$.
+\end{itemize}
+
+Substituindo a Eq. \ref{apI_eq:5} na Eq. \ref{apI_eq:1}:
+
+\begin{equation}
+  \label{apI_eq:6}
+  \begin{aligned}
+  J(\mathbf{x}) = {} & \frac{1}{2}(\mathbf{x} - \mathbf{x}^{b})^{T}\mathbf{B}^{-1}(\mathbf{x} - \mathbf{x}^{b}) \\
+  & + \frac{1}{2}[\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b}) - \mathbf{H}(\mathbf{x} - \mathbf{x}^{b})]^{T}\mathbf{R}^{-1}[\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b}) - \mathbf{H}(\mathbf{x} - \mathbf{x}^{b})]
+  \end{aligned}
+\end{equation}
+
+Fatorando e desenvolvendo a Eq. \ref{apI_eq:6}:
+
+\begin{equation}
+  \label{apI_eq:7}
+  \begin{aligned}
+    J(\mathbf{x}) = {} & \frac{1}{2}\lbrace(\mathbf{x} - \mathbf{x}^{b})^{T}\mathbf{B}^{-1}(\mathbf{x} - \mathbf{x}^{b}) \\
+               & + [\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b}) - \mathbf{H}(\mathbf{x} - \mathbf{x}^{b})]^{T}\mathbf{R}^{-1}[\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b}) - \mathbf{H}(\mathbf{x} - \mathbf{x}^{b})]\rbrace
+  \end{aligned}
+\end{equation}
+
+\begin{equation}
+  \label{apI_eq:8}
+  \begin{aligned}
+    2J(\mathbf{x}) = {} & (\mathbf{x} - \mathbf{x}^{b})^{T}\mathbf{B}^{-1}(\mathbf{x} - \mathbf{x}^{b}) \\
+    & + [\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b}) - \mathbf{H}(\mathbf{x} - \mathbf{x}^{b})]^{T}\mathbf{R}^{-1}[\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b}) - \mathbf{H}(\mathbf{x} - \mathbf{x}^{b})]
+  \end{aligned}
+\end{equation}
+
+\begin{equation}
+  \label{apI_eq:9}
+  \begin{aligned}
+    2J(\mathbf{x}) = {} & (\mathbf{x} - \mathbf{x}^{b})^{T}\mathbf{B}^{-1}(\mathbf{x} - \mathbf{x}^{b}) \\
+    & + \lbrace{[\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b})]^{T} - [\mathbf{H}(\mathbf{x} - \mathbf{x}^{b})]^{T}\rbrace}\mathbf{R}^{-1}[\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b}) - \mathbf{H}(\mathbf{x} - \mathbf{x}^{b})]
+  \end{aligned}
+\end{equation}
+
+\begin{equation}
+  \label{apI_eq:10}
+  \begin{aligned}
+    2J(\mathbf{x}) = {} & (\mathbf{x} - \mathbf{x}^{b})^{T}\mathbf{B}^{-1}(\mathbf{x} - \mathbf{x}^{b}) \\
+    & + \lbrace{[\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b})]^{T} - (\mathbf{x} - \mathbf{x}^{b})^{T}\mathbf{H}^{T}\rbrace}\mathbf{R}^{-1}[\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b}) - \mathbf{H}(\mathbf{x} - \mathbf{x}^{b})]
+  \end{aligned}
+\end{equation}
+
+\begin{equation}
+  \label{apI_eq:11}
+  \begin{aligned}
+    2J(\mathbf{x}) = {} & (\mathbf{x} - \mathbf{x}^{b})^{T}\mathbf{B}^{-1}(\mathbf{x} - \mathbf{x}^{b}) \\
+    & + \lbrace{[\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b})]^{T}\mathbf{R}^{-1} - (\mathbf{x} - \mathbf{x}^{b})^{T}\mathbf{H}^{T}\mathbf{R}^{-1}\rbrace}[\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b}) - \mathbf{H}(\mathbf{x} - \mathbf{x}^{b})]
+  \end{aligned}
+\end{equation}
+
+\begin{equation}
+  \label{apI_eq:12}
+  \begin{aligned}
+    2J(\mathbf{x}) = {} & (\mathbf{x} - \mathbf{x}^{b})^{T}\mathbf{B}^{-1}(\mathbf{x} - \mathbf{x}^{b}) \\
+    & + [\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b})]^{T}\mathbf{R}^{-1}[\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b})] \\ 
+                & - [\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b})]^{T}\mathbf{R}^{-1}\mathbf{H}(\mathbf{x} - \mathbf{x}^{b}) \\
+                & - (\mathbf{x} - \mathbf{x}^{b})^{T}\mathbf{H}^{T}\mathbf{R}^{-1}[\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b})] \\ 
+                & + (\mathbf{x} - \mathbf{x}^{b})^{T}\mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H}(\mathbf{x} - \mathbf{x}^{b})
+  \end{aligned}  
+\end{equation}
+
+Reorganizando a Eq. \ref{apI_eq:12} - aqui serão fatorados os termos 1 e 5 do lado direito:
+
+\begin{equation}
+  \label{apI_eq:13}
+  \begin{aligned}
+    2J(\mathbf{x}) = {} & (\mathbf{x} - \mathbf{x}^{b})^{T}\mathbf{B}^{-1}(\mathbf{x} - \mathbf{x}^{b}) \\
+    & + (\mathbf{x} - \mathbf{x}^{b})^{T}\mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H}(\mathbf{x} - \mathbf{x}^{b}) \\
+                & - [\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b})]^{T}\mathbf{R}^{-1}\mathbf{H}(\mathbf{x} - \mathbf{x}^{b}) \\
+                & - (\mathbf{x} - \mathbf{x}^{b})^{T}\mathbf{H}^{T}\mathbf{R}^{-1}[\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b})] \\
+                & + [\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b})]^{T}\mathbf{R}^{-1}[\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b})]
+  \end{aligned}  
+\end{equation}
+
+Combinando os dois primeiros termos do lado direito da Eq. \ref{apI_eq:13}, obtemos:
+
+\begin{equation}
+  \label{apI_eq:14}
+  \begin{aligned}
+    2J(\mathbf{x}) = {} & (\mathbf{x} - \mathbf{x}^{b})^{T}[\mathbf{B}^{-1} + \mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H}](\mathbf{x} - \mathbf{x}^{b}) \\
+                & - [\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b})]^{T}\mathbf{R}^{-1}\mathbf{H}(\mathbf{x} - \mathbf{x}^{b}) \\
+                & - (\mathbf{x} - \mathbf{x}^{b})^{T}\mathbf{H}^{T}\mathbf{R}^{-1}[\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b})] \\
+                & + [\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b})]^{T}\mathbf{R}^{-1}[\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b})]
+  \end{aligned}  
+\end{equation}
+
+A forma da Eq. \ref{apI_eq:14} é a forma em que será aplicado o operador gradiente. O gradiente é aplicado na função custo variacional para se determinar o vetor de estado de análise $\mathbf{x}^{a}$ tal que $\nabla_{\mathbf{x}}{J(\mathbf{x})} = 0$. Ou seja, o mínimo de $J(\mathbf{x})$ fornece os valores do vetor de estado analisado.\\
+
+\begin{teorema}
+\label{apI_teo1}
+Dada a função quadrática $F(\mathbf{x}) = \frac{1}{2}\mathbf{x}^{T}\mathbf{A}\mathbf{x} + \mathbf{d} + c$, onde $\mathbf{A}$ é uma matriz simétrica (ou seja, é igual à sua transposta), $\mathbf{d}$ é um vetor e $c$ é um escalar, o gradiente de $F(\mathbf{x})$ é dado por $\nabla_{\mathbf{x}}{F(\mathbf{x})} = \mathbf{A}\mathbf{x} + \mathbf{d}$.
+\end{teorema}
+
+\begin{proof}
+\begin{align*}
+    F(\mathbf{x}) &= \frac{1}{2}\mathbf{x}^{T}\mathbf{A}\mathbf{x} + \mathbf{d} + c \\
+    \frac{\partial F}{\partial \mathbf{x}} &= \frac{1}{2}(\mathbf{A}\mathbf{x} + \mathbf{A}^{T}\mathbf{x}) + \mathbf{d}
+\end{align*}
+
+
+Se $\mathbf{A}$ é simétrica, então $\mathbf{A}^{T} = \mathbf{A}$, logo:
+
+\begin{align*}
+    \frac{\partial F}{\partial \mathbf{x}} &= \frac{1}{2}(\mathbf{A}\mathbf{x} + \mathbf{A}\mathbf{x}) + \mathbf{d} \\
+    \frac{\partial F}{\partial \mathbf{x}} &= \frac{1}{2}(2\mathbf{A}\mathbf{x}) + \mathbf{d} \\
+    \frac{\partial F}{\partial \mathbf{x}} &= \mathbf{A}\mathbf{x} + \mathbf{d}
+\end{align*}
+\end{proof}
+
+Aplicando o operador gradiente na Eq. \ref{apI_eq:14}, obtém-se:
+
+\begin{equation}
+  \label{apI_eq:17}
+  \begin{aligned}
+    \nabla_{\mathbf{x}}{2J(\mathbf{x})} = {} &\frac{\partial \lbrace(\mathbf{x} - \mathbf{x}^{b})^{T}[\mathbf{B}^{-1} + \mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H}](\mathbf{x} - \mathbf{x}^{b})\rbrace}{\partial \mathbf{x}} \\
+                & - \frac{\partial \lbrace[\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b})]^{T}\mathbf{R}^{-1}\mathbf{H}(\mathbf{x} - \mathbf{x}^{b})\rbrace}{\partial \mathbf{x}} \\
+                & - \frac{\partial \lbrace(\mathbf{x} - \mathbf{x}^{b})^{T}\mathbf{H}^{T}\mathbf{R}^{-1}[\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b})]\rbrace}{\partial \mathbf{x}} \\
+                & + \frac{\partial \lbrace[\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b})]^{T}\mathbf{R}^{-1}[\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b})]\rbrace}{\partial \mathbf{x}}
+  \end{aligned}  
+\end{equation}
+
+Na Eq. \ref{apI_eq:17} observamos que o termo 4 do lado direito não depende do vetor de estado analisado $\mathbf{x}$ e que portanto $\frac{\partial \lbrace[\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b})]^{T}\mathbf{R}^{-1}[\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b})]\rbrace}{\partial \mathbf{x}} = 0$, logo:
+
+\begin{equation}
+  \label{apI_eq:18}
+  \begin{aligned}
+    2\nabla_{\mathbf{x}}{J(\mathbf{x})} = {} & \frac{\partial \lbrace(\mathbf{x} - \mathbf{x}^{b})^{T}[\mathbf{B}^{-1} + \mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H}](\mathbf{x} - \mathbf{x}^{b})\rbrace}{\partial \mathbf{x}} \\
+                & - \frac{\partial \lbrace[\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b})]^{T}\mathbf{R}^{-1}\mathbf{H}(\mathbf{x} - \mathbf{x}^{b})\rbrace}{\partial \mathbf{x}} \\ 
+                & - \frac{\partial \lbrace(\mathbf{x} - \mathbf{x}^{b})^{T}\mathbf{H}^{T}\mathbf{R}^{-1}[\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b})]\rbrace}{\partial \mathbf{x}}
+  \end{aligned}  
+\end{equation}
+
+Utilizando o Teorema \ref{apI_teo1}, obtém-se:
+
+\begin{equation}
+  \label{apI_eq:19}
+  \begin{aligned}
+    2\nabla_{\mathbf{x}}{J(\mathbf{x})} = {} & [(\mathbf{B}^{-1} + \mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H})^{T}(\mathbf{x} - \mathbf{x}^{b}) + (\mathbf{B}^{-1} + \mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H})(\mathbf{x} - \mathbf{x}^{b})] \\
+                & - \frac{\partial \lbrace[\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b})]^{T}\mathbf{R}^{-1}\mathbf{H}(\mathbf{x} - \mathbf{x}^{b})\rbrace}{\partial \mathbf{x}} \\ 
+                & - {(\mathbf{H}^{T}\mathbf{R}^{-1})^{T}[\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b})] + (\mathbf{H}^{T}\mathbf{R}^{-1})[\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b})]}
+  \end{aligned}  
+\end{equation}
+
+O segundo termo da Eq. \ref{apI_eq:19} resulta em zero, pois a derivada da constante $[\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b})]\mathbf{R}^{-1}\mathbf{H}$ é zero.
+
+Utilizando-se do fato de que as relações entre as matrizes nos termos 1 a 3 do lado direito da Eq. \ref{apI_eq:18} geram matrizes simétricas (e.g., $(\mathbf{B}^{-1} + \mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H})^{T}= (\mathbf{B}^{-1} + \mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H})$), a Eq. \ref{apI_eq:19} reduz-se a:
+
+% \begin{equation}
+%   \label{apI_eq:20}
+% %  \begin{split}
+%     2\nabla_{\mathbf{x}}{J(\mathbf{x})} = 2[(\mathbf{B}^{-1} + \mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H})(\mathbf{x} - \mathbf{x}^{b})] - 2[(\mathbf{H}^{T}\mathbf{R}^{-1})[\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b})]]
+% %  \end{split}  
+% \end{equation}
+
+% e,
+
+% \begin{equation}
+%   \label{apI_eq:21}
+%   \begin{split}
+%     \nabla_{\mathbf{x}}{J(\mathbf{x})} = (\mathbf{B}^{-1} + \mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H})(\mathbf{x} - \mathbf{x}^{b}) - (\mathbf{H}^{T}\mathbf{R}^{-1})[\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b})]
+%   \end{split}  
+% \end{equation}
+
+\begin{align}
+  \label{apI_eq:20}
+    2\nabla_{\mathbf{x}}{J(\mathbf{x})} & = 2[(\mathbf{B}^{-1} + \mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H})(\mathbf{x} - \mathbf{x}^{b})] - 2{(\mathbf{H}^{T}\mathbf{R}^{-1})[\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b})]} \\
+  \label{apI_eq:21}
+    \nabla_{\mathbf{x}}{J(\mathbf{x})} & = (\mathbf{B}^{-1} + \mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H})(\mathbf{x} - \mathbf{x}^{b}) - (\mathbf{H}^{T}\mathbf{R}^{-1})[\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b})]
+\end{align}
+
+No inicio foi feita consideração de que o vetor de estados analisado $\mathbf{x}$ é a própria análise quando $\nabla_{\mathbf{x}}{J(\mathbf{x})} = 0$, logo iguala-se a Eq. \ref{apI_eq:21} a zero, de forma que $\mathbf{x} = \mathbf{x}^{a}$:
+
+\begin{equation}
+  \label{apI_eq:22}
+  \begin{split}
+    0 = (\mathbf{B}^{-1} + \mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H})(\mathbf{x}^{a} - \mathbf{x}^{b}) - (\mathbf{H}^{T}\mathbf{R}^{-1})[\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b})]
+  \end{split}  
+\end{equation}
+
+Reorganizando a Eq. \ref{apI_eq:22}:
+
+% \begin{equation}
+%   \label{apI_eq:23}
+%   \begin{split}
+%     (\mathbf{B}^{-1} + \mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H})(\mathbf{x}^{a} - \mathbf{x}^{b}) - (\mathbf{H}^{T}\mathbf{R}^{-1})[\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b})] = 0 \\
+%     (\mathbf{B}^{-1} + \mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H})(\mathbf{x}^{a} - \mathbf{x}^{b}) = (\mathbf{H}^{T}\mathbf{R}^{-1})[\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b})] \\
+%     (\mathbf{x}^{a} - \mathbf{x}^{b}) = (\mathbf{B}^{-1} + \mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H})^{-1}[(\mathbf{H}^{T}\mathbf{R}^{-1})[\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b})]]
+%   \end{split}  
+% \end{equation}
+
+\begin{align}
+  \label{apI_eq:23}
+  (\mathbf{B}^{-1} + \mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H})(\mathbf{x}^{a} - \mathbf{x}^{b}) - (\mathbf{H}^{T}\mathbf{R}^{-1})[\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b})] = 0 \\
+  \label{apI_eq:24}
+  (\mathbf{B}^{-1} + \mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H})(\mathbf{x}^{a} - \mathbf{x}^{b}) = (\mathbf{H}^{T}\mathbf{R}^{-1})[\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b})] \\
+  \label{apI_eq:25}
+  (\mathbf{x}^{a} - \mathbf{x}^{b}) = (\mathbf{B}^{-1} + \mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H})^{-1}{(\mathbf{H}^{T}\mathbf{R}^{-1})[\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b})]}
+\end{align}
+
+A partir da Eq. \ref{apI_eq:25}, obtemos a equação de análise:
+
+\begin{equation}
+  \label{apI_eq:26}
+    \mathbf{x}^{a} = \mathbf{x}^{b} + (\mathbf{B}^{-1} + \mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H})^{-1}{(\mathbf{H}^{T}\mathbf{R}^{-1})[\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b})]}
+\end{equation}
+
+%Utilizando a identidade de Sherman-Morrison-Woodburry, podemos resscrever a Eq. \ref{apI_eq:26} da seguinte maneira:
+
+O cálculo do termo de peso dado por $(\mathbf{B}^{-1} + \mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H})^{-1}$ pode ser realizado aplicando-se a identidade de Sherman-Morrison-Woodburry \cite{sherman/1950,woodbury/1950}, que facilita numericamente o cálculo da inversa da soma das matrizes $\mathbf{B}^{-1}$ e  $\mathbf{H}\mathbf{B}\mathbf{H}^{T}$. Para isso, a identidade será usada de maneira que a equação de análise mostrada na Eq. \ref{apI_eq:26} poderá ser reescrita em sua forma equivalente (apresentada pela Eq. \ref{apI_eq:28} adiante). A identidade de Sherman-Morrison-Woodburry é demonstrada da seguinte forma:
+
+% Para chegarmos à uma forma equivalente para a Eq. \ref{}, desenvolveremos a identidade de SMW.
+
+% O primeiro passo é multiplicar dividir o termo $\mathbf{B}\mathbf{H}^{T}(\mathbf{H}\mathbf{B}\mathbf{H}^{T}+\mathbf{R})^{-1}$ por $(\mathbf{B}^{-1}+\mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H})$:
+
+% \begin{equation}
+%   \label{apI_eq:27}
+%   \mathbf{B}\mathbf{H}^{T}(\mathbf{H}\mathbf{B}\mathbf{H}^{T}+\mathbf{R})^{-1} = (\mathbf{B}^{-1}+\mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H})^{-1} (\mathbf{B}^{-1}+\mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H})\mathbf{B}\mathbf{H}^{T} (\mathbf{H}\mathbf{B}\mathbf{H}^{T}+\mathbf{R})^{-1}
+% \end{equation}
+
+% O segundo passo é multiplicar $\mathbf{B}\mathbf{H}^{T}$ por $(\mathbf{B}^{-1}+\mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H})$:
+
+% \begin{equation}
+%   \label{apI_eq:28}
+%   \mathbf{B}\mathbf{H}^{T}(\mathbf{H}\mathbf{B}\mathbf{H}^{T}+\mathbf{R})^{-1} = (\mathbf{B}^{-1}+\mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H})^{-1} (\mathbf{H}^{T}+\mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H}\mathbf{B}\mathbf{H}^{T}) (\mathbf{H}\mathbf{B}\mathbf{H}^{T}+\mathbf{R})^{-1}
+% \end{equation}
+
+% O terceiro passo é colocar o coeficiente $\mathbf{H}^{T}\mathbf{R}^{-1}$ em evidência:
+
+% \begin{equation}
+%   \label{apI_eq:29}
+%   \mathbf{B}\mathbf{H}^{T}(\mathbf{H}\mathbf{B}\mathbf{H}^{T}+\mathbf{R})^{-1} = (\mathbf{B}^{-1}+\mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H})^{-1} \mathbf{H}^{T}\mathbf{R}^{-1}(\mathbf{R}+\mathbf{H}\mathbf{B}\mathbf{H}^{T}) (\mathbf{H}\mathbf{B}\mathbf{H}^{T}+\mathbf{R})^{-1}
+% \end{equation}
+
+% O quarto passo resulta no termo $\mathbf{B}\mathbf{H}^{T}(\mathbf{H}\mathbf{B}\mathbf{H}^{T}+\mathbf{R})^{-1}$ pelo produto dos termos $(\mathbf{H}\mathbf{B}\mathbf{H}^{T}+\mathbf{R})^{-1}$ e $(\mathbf{H}\mathbf{B}\mathbf{H}^{T}+\mathbf{R})$:
+
+% \begin{equation}
+%   \label{apI_eq:30}
+%   \mathbf{B}\mathbf{H}^{T}(\mathbf{H}\mathbf{B}\mathbf{H}^{T}+\mathbf{R})^{-1} = (\mathbf{B}^{-1} + \mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H})^{-1}{(\mathbf{H}^{T}\mathbf{R}^{-1})}
+% \end{equation}
+%%
+% \begin{equation}
+%   \label{apI_eq:27}
+%   \mathbf{B}\mathbf{H}^{T}(\mathbf{H}\mathbf{B}\mathbf{H}^{T}+\mathbf{R})^{-1} = (\mathbf{B}^{-1}+\mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H})^{-1} (\mathbf{B}^{-1}+\mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H})\mathbf{B}\mathbf{H}^{T} (\mathbf{H}\mathbf{B}\mathbf{H}^{T}+\mathbf{R})^{-1} %\\
+
+%   \label{apI_eq:28}
+%   \mathbf{B}\mathbf{H}^{T}(\mathbf{H}\mathbf{B}\mathbf{H}^{T}+\mathbf{R})^{-1} = (\mathbf{B}^{-1}+\mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H})^{-1} (\mathbf{H}^{T}+\mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H}\mathbf{B}\mathbf{H}^{T}) (\mathbf{H}\mathbf{B}\mathbf{H}^{T}+\mathbf{R})^{-1} \\
+
+%   \label{apI_eq:29}
+%   \mathbf{B}\mathbf{H}^{T}(\mathbf{H}\mathbf{B}\mathbf{H}^{T}+\mathbf{R})^{-1} = (\mathbf{B}^{-1}+\mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H})^{-1} \mathbf{H}^{T}\mathbf{R}^{-1}(\mathbf{R}+\mathbf{H}\mathbf{B}\mathbf{H}^{T}) (\mathbf{H}\mathbf{B}\mathbf{H}^{T}+\mathbf{R})^{-1} \\
+
+%   \label{apI_eq:30}
+%   \mathbf{B}\mathbf{H}^{T}(\mathbf{H}\mathbf{B}\mathbf{H}^{T}+\mathbf{R})^{-1} = (\mathbf{B}^{-1} + \mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H})^{-1}{(\mathbf{H}^{T}\mathbf{R}^{-1})}
+% \end{equation}
+
+
+\begin{equation}
+  \label{apI_eq:27}
+  \begin{aligned}
+     \mathbf{B}\mathbf{H}^{T}(\mathbf{H}\mathbf{B}\mathbf{H}^{T}+\mathbf{R})^{-1} & = (\mathbf{B}^{-1}+\mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H})^{-1} (\mathbf{B}^{-1}+\mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H})\mathbf{B}\mathbf{H}^{T} (\mathbf{H}\mathbf{B}\mathbf{H}^{T}+\mathbf{R})^{-1} \\
+                & = (\mathbf{B}^{-1}+\mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H})^{-1} (\mathbf{H}^{T}+\mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H}\mathbf{B}\mathbf{H}^{T}) (\mathbf{H}\mathbf{B}\mathbf{H}^{T}+\mathbf{R})^{-1} \\ 
+                & = (\mathbf{B}^{-1}+\mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H})^{-1} \mathbf{H}^{T}\mathbf{R}^{-1}(\mathbf{R}+\mathbf{H}\mathbf{B}\mathbf{H}^{T}) (\mathbf{H}\mathbf{B}\mathbf{H}^{T}+\mathbf{R})^{-1} \\
+                & = (\mathbf{B}^{-1} + \mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H})^{-1}{(\mathbf{H}^{T}\mathbf{R}^{-1})}
+  \end{aligned}  
+\end{equation}
+
+Utilizando-se do fato de que o termo de peso utilizado na Eq. \ref{apI_eq:26} é equivalente ao termo $\mathbf{B}\mathbf{H}^{T}(\mathbf{H}\mathbf{B}\mathbf{H}^{T}+\mathbf{R})^{-1}$, podemos então reescrever a equação de análise \ref{apI_eq:26} da seguinte maneira:
+
+\begin{equation}
+  \label{apI_eq:28}
+    \mathbf{x}^{a} = \mathbf{x}^{b} + \mathbf{B}\mathbf{H}^{T}(\mathbf{H}\mathbf{B}\mathbf{H}^{T}+\mathbf{R})^{-1} [\mathbf{y}^{o} - \textit{H}(\mathbf{x}^{b})]
+\end{equation}
+
+A vantagem da forma da equação de análise apresentada na Eq. \ref{apI_eq:28} está no custo computacional, sendo menos custoso calcular o termo $(\mathbf{H}\mathbf{B}\mathbf{H}^{T}+\mathbf{R})^{-1}$ do que $(\mathbf{B}^{-1} + \mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H})^{-1}$.

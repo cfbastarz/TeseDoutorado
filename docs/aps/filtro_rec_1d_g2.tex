@@ -1,0 +1,344 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{APÊNDICE D - Filtro Recursivo 1D - Grau 2}
+\label{apendiceV}
+
+A derivação de um filtro recursivo unidimensional de grau 2 é apresentado neste apêndice, como uma extensão do filtro derivado no Apêndice \ref{apendiceIV}. A derivação segue a mesma ideia apresentada anteriormente, mas parte da expansão em série de Taylor em grau 2 do operador de diferenças finitas $(D^{*}_{(n)})$, seguindo as ideias apresentadas em \citeauthoronline{purseretal/2003a} (2003a). Neste apêndice, também serão utilizados ``[ ]'' para fazer referências à determinadas equações do trabalho de \citeauthoronline{purseretal/2003a} (2003a).
+
+Partindo-se da forma apresentada na Eq. \ref{apIV_eq:2} para $n = 2$, obtemos:
+
+% \begin{equation}
+% \label{apV_eq:1}
+% D^{*}_{(2)} = \left( 1 - \frac{K}{\kappa_{1}} \right)  \left( 1 - \frac{K}{\kappa_{2}} \right)
+% \end{equation}
+
+% \begin{equation}
+% \label{apV_eq:2}
+% D^{*}_{(2)} = 1 - \frac{K}{\kappa_{2}} - \frac{K}{\kappa_{1}} + \frac{K^{2}}{\kappa_{1}\kappa_{2}}
+% \end{equation}
+
+% \begin{equation}
+% \label{apV_eq:2}
+% D^{*}_{(2)} = 1 - \left( \frac{1}{\kappa_{1}} - \frac{1}{\kappa_{2}} \right)K + \left( \frac{1}{\kappa_{1}\kappa_{2}} \right)K^{2}
+% \end{equation}
+
+\begin{align}
+\label{apV_eq:1}
+D^{*}_{(2)} & = \left( 1 - \frac{K}{\kappa_{1}} \right)  \left( 1 - \frac{K}{\kappa_{2}} \right) \\
+\label{apV_eq:1.1}
+D^{*}_{(2)} & = 1 - \frac{K}{\kappa_{2}} - \frac{K}{\kappa_{1}} + \frac{K^{2}}{\kappa_{1}\kappa_{2}} \\
+\label{apV_eq:2}
+D^{*}_{(2)} & = 1 - \left( \frac{1}{\kappa_{1}} - \frac{1}{\kappa_{2}} \right)K + \left( \frac{1}{\kappa_{1}\kappa_{2}} \right)K^{2}
+\end{align}
+
+Comparando a Eq. \ref{apV_eq:2} com a Eq. \ref{apIV_eq:2}, para $n = 2$:
+
+\begin{equation}
+\label{apV_eq:3}
+- \left( \frac{1}{\kappa_{1}} - \frac{1}{\kappa_{2}} \right) = b_{1,1} \frac{\sigma^{2}}{2}
+\end{equation}
+
+Com $b_{1,1} = 1$ (segundo a Tabela [1] de \citeauthoronline{purseretal/2003a}, 2003a):
+
+% \begin{equation}
+% \label{apV_eq:4}
+% - \left( \frac{1}{\kappa_{1}} - \frac{1}{\kappa_{2}} \right) = \frac{\sigma^{2}}{2}
+% \end{equation}
+
+% \begin{equation}
+% \label{apV_eq:5}
+% \frac{\kappa_{1} + \kappa_{2}}{\kappa_{1}\kappa_{2}} = - \frac{\sigma^{2}}{2}
+% \end{equation}
+
+\begin{align}
+\label{apV_eq:4}
+- \left( \frac{1}{\kappa_{1}} - \frac{1}{\kappa_{2}} \right) & = \frac{\sigma^{2}}{2} \\
+\label{apV_eq:5}
+\frac{\kappa_{1} + \kappa_{2}}{\kappa_{1}\kappa_{2}} & = - \frac{\sigma^{2}}{2}
+\end{align}
+
+Além disso, temos que:
+
+\begin{equation}
+\label{apV_eq:6}
+\frac{1}{\kappa_{1}\kappa_{2}} = b_{1,2} \frac{\sigma^{2}}{2} + \frac{b_{2,2}}{2!}\left(  \frac{\sigma_{2}}{2} \right)^{2}
+\end{equation}
+
+Com $b_{1,2} = \frac{1}{2}$ e $b_{2,2} = 1$ (segundo a Tabela [1] de \citeauthoronline{purseretal/2003a}, 2003a):
+
+% \begin{equation}
+% \label{apV_eq:7}
+% \frac{1}{\kappa_{1}\kappa_{2}} = \frac{\sigma^{2}}{24} + \frac{\sigma^{4}}{8}
+% \end{equation}
+
+% \begin{equation}
+% \label{apV_eq:8}
+% \frac{1}{\kappa_{1}\kappa_{2}} = \frac{\sigma^{2} + 3\sigma^{4}}{24}
+% \end{equation}
+
+% \begin{equation}
+% \label{apV_eq:9}
+% \kappa_{1}\kappa_{2} = \frac{24}{\sigma^{2} + 3\sigma^{4}} \text{, com $\sigma \neq 0$}
+% \end{equation}
+
+\begin{align}
+\label{apV_eq:7}
+\frac{1}{\kappa_{1}\kappa_{2}} & = \frac{\sigma^{2}}{24} + \frac{\sigma^{4}}{8} \\
+\label{apV_eq:8}
+\frac{1}{\kappa_{1}\kappa_{2}} & = \frac{\sigma^{2} + 3\sigma^{4}}{24} \\
+\label{apV_eq:9}
+\kappa_{1}\kappa_{2} & = \frac{24}{\sigma^{2} + 3\sigma^{4}} \text{, com $\sigma \neq 0$}
+\end{align}
+
+Substituindo a Eq. \ref{apV_eq:9} na Eq. \ref{apV_eq:5}:
+
+% \begin{equation}
+% \label{apV_eq:10}
+% \frac{\frac{\kappa_{1} + \kappa_{2}}{24}}{\sigma^{2} + 3\sigma^{4}} = - \frac{\sigma^{2}}{2}
+% \end{equation}
+
+% \begin{equation}
+% \label{apV_eq:11}
+% (\kappa_{1} + \kappa_{2}) \left( \frac{24}{\sigma^{2} + 3\sigma^{4}} \right) = - \frac{\sigma^2}{2}
+% \end{equation}
+
+% \begin{equation}
+% \label{apV_eq:12}
+% \kappa_{1} + \kappa_{2} = - \frac{12\sigma^{2}}{\sigma^{2} + 3\sigma^{4}} \text{, com $\sigma \neq 0$}
+% \end{equation}
+
+\begin{align}
+\label{apV_eq:10}
+\frac{\frac{\kappa_{1} + \kappa_{2}}{24}}{\sigma^{2} + 3\sigma^{4}} & = - \frac{\sigma^{2}}{2} \\
+\label{apV_eq:11}
+(\kappa_{1} + \kappa_{2}) \left( \frac{24}{\sigma^{2} + 3\sigma^{4}} \right) & = - \frac{\sigma^2}{2} \\
+\label{apV_eq:12}
+\kappa_{1} + \kappa_{2} & = - \frac{12\sigma^{2}}{\sigma^{2} + 3\sigma^{4}} \text{, com $\sigma \neq 0$}
+\end{align}
+
+Assim como no caso do filtro recursivo de grau 1, precisamos determinar $\kappa_{1}$ e $\kappa_{2}$, que são as raízes do polinômio $K$, dado na Eq. \ref{apIV_eq:2}.
+
+% A Eq. (28) pode ser escrita também na seguinte forma quadrática:
+
+% \begin{equation}
+% \label{apV_eq:13}
+% D_{(2)}^{*} = 1 - \left( \frac{1}{\kappa_{1}} - \frac{1}{\kappa_{2}} \right)K + \left( \frac{1}{\kappa_{1}\kappa_{2}} \right)K^{2}
+% \end{equation}
+
+Podemos utilizar a fórmula de Bhaskara para determinar os coeficientes $a$, $b$ e $c$ abaixo, para $\kappa_{1}$ e $\kappa_{2}$:
+
+% \begin{equation}
+% \label{apV_eq:14}
+% \kappa_{1} = - \frac{b + (b^{2} - 4ac)^\frac{1}{2}}{2a}
+% \end{equation}
+
+% \begin{equation}
+% \label{apV_eq:15}
+% \kappa_{2} = - \frac{b - (b^{2} - 4ac)^\frac{1}{2}}{2a}
+% \end{equation}
+
+\begin{align}
+\label{apV_eq:14}
+\kappa_{1} & = - \frac{b + (b^{2} - 4ac)^\frac{1}{2}}{2a} \\
+\label{apV_eq:15}
+\kappa_{2} & = - \frac{b - (b^{2} - 4ac)^\frac{1}{2}}{2a}
+\end{align}
+
+Com isso, obtém-se:
+
+\begin{equation}
+\label{apV_eq:16}
+b = - \left( \frac{1}{\kappa_{1}} - \frac{1}{\kappa_{2}} \right) = - \left( \frac{\kappa_{1} + \kappa_{2}}{\kappa_{1}\kappa_{2}} \right) = \frac{\sigma^{2}}{2}
+\end{equation}
+
+Que é exatamente a Eq. \ref{apV_eq:5}.
+
+Além disso:
+
+\begin{equation}
+\label{apV_eq:17}
+a = \left( \frac{1}{\kappa_{1}\kappa_{2}} \right) = \frac{\sigma^{2} + 3\sigma^{4}}{24}
+\end{equation}
+
+Que é exatamente a Eq. \ref{apV_eq:9}. Consequentemente, $c = 1$.
+
+Substituindo $a$, $b$, e $c$ nas Eqs. \ref{apV_eq:14} e \ref{apV_eq:15}, obtemos:
+
+% \begin{equation}
+% \label{apV_eq:18}
+% \kappa_{1} = \frac{ \frac{\sigma^{2}}{2} + \left[ \left( -\frac{\sigma^{2}}{2} \right)^2 -4 \left(  \frac{\sigma^{2} + 3\sigma^{4}}{24} \right) \right]^\frac{1}{2} }{2 \left( \frac{\sigma^{2} + 3\sigma^{4}}{24} \right)}
+% \end{equation}
+
+% \begin{equation}
+% \label{apV_eq:19}
+% \kappa_{1} = \frac{ \frac{\sigma^{2}}{2} + \left[ \frac{\sigma^{4}}{4} -\left(  \frac{\sigma^{2} + 3\sigma^{4}}{6} \right) \right]^\frac{1}{2} }{\left( \frac{\sigma^{2} + 3\sigma^{4}}{12} \right)}
+% \end{equation}
+
+% \begin{equation}
+% \label{apV_eq:20}
+% \kappa_{1} = \frac{ \frac{\sigma^{2}}{2} + \left[ \frac{3\sigma^{4} - 2\sigma^{2} - 6\sigma^{4}}{12} \right]^\frac{1}{2} }{\left( \frac{\sigma^{2} + 3\sigma^{4}}{12} \right)}
+% \end{equation}
+
+% \begin{equation}
+% \label{apV_eq:21}
+% \kappa_{1} = \frac{ \frac{\sigma^{2}}{2} + \left[ - \left( \frac{3\sigma^{4} + 2\sigma^{2}}{12} \right) \right]^\frac{1}{2} }{\left( \frac{\sigma^{2} + 3\sigma^{4}}{12} \right)}
+% \end{equation}
+
+% \begin{equation}
+% \label{apV_eq:22}
+% \kappa_{1} = \left( \frac{12}{\sigma^{2} + 3\sigma^{4}} \right) \left[ \frac{\sigma^{2}}{2} + i\left( \frac{3\sigma^{4} + 2\sigma^{2}}{12} \right)^\frac{1}{2} \right]
+% \end{equation}
+
+\begin{align}
+\label{apV_eq:18}
+\kappa_{1} & = \frac{ \frac{\sigma^{2}}{2} + \left[ \left( -\frac{\sigma^{2}}{2} \right)^2 -4 \left(  \frac{\sigma^{2} + 3\sigma^{4}}{24} \right) \right]^\frac{1}{2} }{2 \left( \frac{\sigma^{2} + 3\sigma^{4}}{24} \right)} \\
+\label{apV_eq:19}
+\kappa_{1} & = \frac{ \frac{\sigma^{2}}{2} + \left[ \frac{\sigma^{4}}{4} -\left(  \frac{\sigma^{2} + 3\sigma^{4}}{6} \right) \right]^\frac{1}{2} }{\left( \frac{\sigma^{2} + 3\sigma^{4}}{12} \right)} \\
+\label{apV_eq:20}
+\kappa_{1} & = \frac{ \frac{\sigma^{2}}{2} + \left[ \frac{3\sigma^{4} - 2\sigma^{2} - 6\sigma^{4}}{12} \right]^\frac{1}{2} }{\left( \frac{\sigma^{2} + 3\sigma^{4}}{12} \right)} \\
+\label{apV_eq:21}
+\kappa_{1} & = \frac{ \frac{\sigma^{2}}{2} + \left[ - \left( \frac{3\sigma^{4} + 2\sigma^{2}}{12} \right) \right]^\frac{1}{2} }{\left( \frac{\sigma^{2} + 3\sigma^{4}}{12} \right)} \\
+\label{apV_eq:22}
+\kappa_{1} & = \left( \frac{12}{\sigma^{2} + 3\sigma^{4}} \right) \left[ \frac{\sigma^{2}}{2} + i\left( \frac{3\sigma^{4} + 2\sigma^{2}}{12} \right)^\frac{1}{2} \right]
+\end{align}
+
+Consequentemente,
+
+\begin{equation}
+\label{apV_eq:23}
+\kappa_{2} = \left( \frac{12}{\sigma^{2} + 3\sigma^{4}} \right) \left[ \frac{\sigma^{2}}{2} - i\left( \frac{3\sigma^{4} + 2\sigma^{2}}{12} \right)^\frac{1}{2} \right] \text{, com $\sigma \neq 0$}
+\end{equation}
+
+As raízes $\kappa_{1}$ e $\kappa_{2}$ do polinômio $K$ são complexas. Além disso, o fator $\frac{12}{\sigma^{2} + 3\sigma^{4}}$ que multiplica os números complexos são exatamente as somas de $\kappa_{1}$ e $\kappa_{2}$.
+
+Da mesma forma como foi feito para o filtro recursivo 1D de grau 1, precisamos determinar $\omega_{1}$ e $\omega_{2}$ que dependem dos valores definidos de $\kappa_{1}$ e $\kappa_{2}$, respectivamente. $\omega_{1}$ e $\omega_{2}$ serão utilizados para determinar $\zeta_{1}$ e $\zeta_{2}$, que por sua vez definem as matrizes de transição para frente e para trás do filtro recursivo.
+
+Considerando $\kappa_{1}$ e $\kappa_{2}$ a partir da Eq. \ref{apIV_eq:1}:
+
+% \begin{equation}
+% \label{apV_eq:24}
+% \omega_{1} = 1 - \frac{\kappa_{1}}{2}
+% \end{equation}
+
+% \begin{equation}
+% \label{apV_eq:25}
+% \omega_{1} = 1 - \frac{1}{2} \left\lbrace \left( \frac{12}{\sigma^{2} + 3\sigma^{4}} \right) \left[ \frac{\sigma^{2}}{2} + i \left( \frac{3\sigma^{4} + 2\sigma^2}{12} \right)^\frac{1}{2} \right] \right\rbrace
+% \end{equation}
+
+% \begin{equation}
+% \label{apV_eq:25}
+% \omega_{1} = 1 - \left\lbrace \left( \frac{6}{\sigma^{2} + 3\sigma^{4}} \right) \left[ \frac{\sigma^{2}}{2} + i \left( \frac{3\sigma^{4} + 2\sigma^2}{12} \right)^\frac{1}{2} \right] \right\rbrace
+% \end{equation}
+
+% \begin{equation}
+% \label{apV_eq:26}
+% \omega_{1} = 1 - \frac{3\sigma^{2}}{\sigma^{2} + 3\sigma^{4}} - i \left( \frac{6}{\sigma^{2}+3\sigma^{4}} \right) \left( \frac{3\sigma^{4} + 2\sigma^2}{12} \right)^\frac{1}{2}
+% \end{equation}
+
+\begin{align}
+\label{apV_eq:24}
+\omega_{1} & = 1 - \frac{\kappa_{1}}{2} \\
+\label{apV_eq:25}
+\omega_{1} & = 1 - \frac{1}{2} \left\lbrace \left( \frac{12}{\sigma^{2} + 3\sigma^{4}} \right) \left[ \frac{\sigma^{2}}{2} + i \left( \frac{3\sigma^{4} + 2\sigma^2}{12} \right)^\frac{1}{2} \right] \right\rbrace \\
+\label{apV_eq:25.1}
+\omega_{1} & = 1 - \left\lbrace \left( \frac{6}{\sigma^{2} + 3\sigma^{4}} \right) \left[ \frac{\sigma^{2}}{2} + i \left( \frac{3\sigma^{4} + 2\sigma^2}{12} \right)^\frac{1}{2} \right] \right\rbrace \\
+\label{apV_eq:26}
+\omega_{1} & = 1 - \frac{3\sigma^{2}}{\sigma^{2} + 3\sigma^{4}} - i \left( \frac{6}{\sigma^{2}+3\sigma^{4}} \right) \left( \frac{3\sigma^{4} + 2\sigma^2}{12} \right)^\frac{1}{2}
+\end{align}
+
+O mesmo pode ser feito para $\omega_{2}$:
+
+% \begin{equation}
+% \label{apV_eq:27}
+% \omega_{2} = 1 - \frac{\kappa_{2}}{2}
+% \end{equation}
+
+% \begin{equation}
+% \label{apV_eq:28}
+% \omega_{2} = 1 - \frac{1}{2} \left\lbrace \left( \frac{12}{\sigma^{2} + 3\sigma^{4}} \right) \left[ \frac{\sigma^{2}}{2} - i \left( \frac{3\sigma^{4} + 2\sigma^2}{12} \right)^\frac{1}{2} \right] \right\rbrace
+% \end{equation}
+
+% \begin{equation}
+% \label{apV_eq:29}
+% \omega_{2} = 1 - \left\lbrace \left( \frac{6}{\sigma^{2} + 3\sigma^{4}} \right) \left[ \frac{\sigma^{2}}{2} - i \left( \frac{3\sigma^{4} + 2\sigma^2}{12} \right)^\frac{1}{2} \right] \right\rbrace
+% \end{equation}
+
+% \begin{equation}
+% \label{apV_eq:30}
+% \omega_{2} = 1 - \frac{3\sigma^{2}}{\sigma^{2} + 3\sigma^{4}} + i \left( \frac{6}{\sigma^{2}+3\sigma^{4}} \right) \left( \frac{3\sigma^{4} + 2\sigma^2}{12} \right)^\frac{1}{2}
+% \end{equation}
+
+\begin{align}
+\label{apV_eq:27}
+\omega_{2} & = 1 - \frac{\kappa_{2}}{2} \\
+\label{apV_eq:28}
+\omega_{2} & = 1 - \frac{1}{2} \left\lbrace \left( \frac{12}{\sigma^{2} + 3\sigma^{4}} \right) \left[ \frac{\sigma^{2}}{2} - i \left( \frac{3\sigma^{4} + 2\sigma^2}{12} \right)^\frac{1}{2} \right] \right\rbrace \\
+\label{apV_eq:29}
+\omega_{2} & = 1 - \left\lbrace \left( \frac{6}{\sigma^{2} + 3\sigma^{4}} \right) \left[  \frac{\sigma^{2}}{2} - i \left( \frac{3\sigma^{4} + 2\sigma^2}{12} \right)^\frac{1}{2} \right] \right\rbrace \\
+\label{apV_eq:30}
+\omega_{2} & = 1 - \frac{3\sigma^{2}}{\sigma^{2} + 3\sigma^{4}} + i \left( \frac{6}{\sigma^{2}+3\sigma^{4}} \right) \left( \frac{3\sigma^{4} + 2\sigma^2}{12} \right)^\frac{1}{2}
+\end{align}
+
+Utilizando as Eqs. \ref{apIV_eq:11} e \ref{apIV_eq:12}, podemos escrever as expressões para $\zeta_{1}$ e $\zeta_{2}$:
+
+% \begin{equation}
+% \label{apV_eq:31}
+% \zeta_{1}^{'} = \left[ \omega_{1} + i (\omega_{1}^{2} - 1)^\frac{1}{2} \right]^{+1}
+% \end{equation}
+
+% \begin{equation}
+% \label{apV_eq:32}
+% \zeta_{1}^{''} = \left[ \omega_{1} + i (\omega_{1}^{2} - 1)^\frac{1}{2} \right]^{-1}
+% \end{equation}
+
+\begin{align}
+\label{apV_eq:31}
+\zeta_{1}^{'} & = \left[ \omega_{1} + i (\omega_{1}^{2} - 1)^\frac{1}{2} \right]^{+1} \\
+\label{apV_eq:32}
+\zeta_{1}^{''} & = \left[ \omega_{1} + i (\omega_{1}^{2} - 1)^\frac{1}{2} \right]^{-1}
+\end{align}
+
+E também:
+
+% \begin{equation}
+% \label{apV_eq:33}
+% \zeta_{2}^{'} = \left[ \omega_{2} + i (\omega_{2}^{2} - 1)^\frac{1}{2} \right]^{+1}
+% \end{equation}
+
+% \begin{equation}
+% \label{apV_eq:34}
+% \zeta_{2}^{''} = \left[ \omega_{2} + i (\omega_{2}^{2} - 1)^\frac{1}{2} \right]^{-1}
+% \end{equation}
+
+\begin{align}
+\label{apV_eq:33}
+\zeta_{2}^{'} & = \left[ \omega_{2} + i (\omega_{2}^{2} - 1)^\frac{1}{2} \right]^{+1} \\
+\label{apV_eq:34}
+\zeta_{2}^{''} & = \left[ \omega_{2} + i (\omega_{2}^{2} - 1)^\frac{1}{2} \right]^{-1}
+\end{align}
+
+Considerando $\zeta_{1}$ a menor raiz entre $\zeta^{'}_{1}$ e $\zeta^{''}_{1}$ e $\zeta_{2}$ a menor raiz entre $\zeta^{'}_{2}$ e $\zeta^{''}_{2}$, podemos finalmente escrever as expressões para as matrizes $\mathbf{A}$ e $\mathbf{B}$ (utilizando as Eqs. [A.6] e [A.7] de \citeauthoronline{purseretal/2003a}, 2003a), de forma a obtermos a expressão final do polinômio $D^{*}_{(2)}$:
+
+% \begin{equation}
+% \label{apV_eq:35}
+% A = \left( \frac{1 - \zeta_{1}z^{-1}}{1 - \zeta_{1}} \right)\left( \frac{1 - \zeta_{2}z^{-1}}{1 - \zeta_{2}} \right)
+% \end{equation}
+
+% \begin{equation}
+% \label{apV_eq:36}
+% B = \left( \frac{1 - \zeta_{1}z}{1 - \zeta_{1}} \right)\left( \frac{1 - \zeta_{2}z}{1 - \zeta_{2}} \right)
+% \end{equation}
+
+\begin{align}
+\label{apV_eq:35}
+\mathbf{A} & = \left( \frac{1 - \zeta_{1}z^{-1}}{1 - \zeta_{1}} \right)\left( \frac{1 - \zeta_{2}z^{-1}}{1 - \zeta_{2}} \right) \\
+\label{apV_eq:36}
+\mathbf{B} & = \left( \frac{1 - \zeta_{1}z}{1 - \zeta_{1}} \right)\left( \frac{1 - \zeta_{2}z}{1 - \zeta_{2}} \right)
+\end{align}
+
+Como $D^{*}_{(n)} = \mathbf{AB}$, logo:
+
+\begin{equation}
+\label{apV_eq:37}
+D^{*}_{(2)} = \left( \frac{1 - \zeta_{1}z^{-1}}{1 - \zeta_{1}} \right)\left( \frac{1 - \zeta_{2}z^{-1}}{1 - \zeta_{2}} \right)\left( \frac{1 - \zeta_{1}z}{1 - \zeta_{1}} \right)\left( \frac{1 - \zeta_{2}z}{1 - \zeta_{2}} \right)
+\end{equation}

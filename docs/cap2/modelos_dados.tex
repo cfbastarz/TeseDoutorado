@@ -1,0 +1,287 @@
+\chapter{DADOS E METODOLOGIA}  
+\label{cap:dados_metodologias}
+
+\section{Modelo de Circulação Geral do CPTEC}
+\label{sec:mcga}
+
+O Modelo de Circulação Geral da Atmosfera (MCGA) do CPTEC/INPE utilizado nos experimentos deste trabalho é a mesma versão utilizada pela versão operacional do sistema G3DVARv1.1.3 (versão 1.1.3, disponível para uso interno em \url{https://projetos.cptec.inpe.br/projects/g3dvar/repository/show/tags/v1.1.3/G3DVAR}). Esta versão do modelo é frequentemente referenciada como MCGAv4 (versão 4) e ela possui um pacote de opções de configuração da dinâmica bastante semelhante a mais nova versão do modelo (mais detalhes adiante). As diferenças principais entre estas duas versões do modelo atmosférico global do CPTEC, está no conjunto de parametrizações físicas utilizado (comunicação pessoal Silvio N. Figueroa).
+
+O \textit{Brazilian Atmospheric Model} (BAM), ou Modelo Atmosférico Brasileiro do CPTEC/INPE, foi lançamento em Janeiro de 2016. Dada as semelhanças entre esta versão inicial do BAM e o MCGAv4 e a fim de evitar discrepâncias e confusões sobre qual versão foi de fato utilizada, doravante será utilizado o termo BAMv0 para designar a versão do modelo empregada nos experimentos utilizando a infraestrutura do sistema G3DVAR. Portanto, o termo BAMv0 representa o modelo MCGAv4 do sistema G3DVARv1.1.3 com algumas características (de opções da física) do modelo BAM (utilizado pela Divisão de Modelagem e Desenvolvimentos, DMD). Consequentemente, a versão gerada a partir do estabelecimento do sistema de assimilação de dados resultante desta pesquisa, será denominada G3DVARv2 uma vez que traz significativas alterações no sistema em termos de características e funcionalidades.
+
+\subsection{Descrição e opções do Modelo de Circulação Geral}
+
+As características principais do MCGAv4 estão descritas em \citeonline{cavalcantietal/2002}, enquanto que as características principais do BAM estão descritas em \citeonline{kubota/2012} e, principalmente em \citeonline{figueroaetal/2016}. Nesta seção, entretanto, serão descritas as características principais do BAMv0 e quais as principais opções e configurações utilizadas nos experimentos realizados. 
+
+\begin{table}[H]
+\caption{Principais opções das versões MCGAv4 e BAMv0 do modelo de circulação geral do CPTEC.}
+\begin{center} 
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{rcc}
+\toprule
+\toprule
+                                & \textbf{MCGAv4}                             & \textbf{BAMv0}                              \\
+\midrule
+Resolução                       & TQ0299L064/TQ0062L028                       & TQ0062L028                                  \\ 
+Passo de Tempo                  & 200s/1200s                                  & 1200s                                       \\
+Inicialização                   & Diabática/Modos Normais Não Lineares        & Diabática/Modos Normais Não Lineares    \\
+Dinâmica                        & Euleriana                                   & Semi-Lagrangiana                            \\
+Transporte de Umidade           & Lagrangiano                                 & Lagrangiano                                 \\
+Conservação de Massa            & $ln(ps)$                                    & $ln(ps)$                                  \\
+% Física Unificada                & --                                          & .TRUE.                                      \\
+Radiação de Onda Curta          & CLiRAD \cite{chou/1999}                     & CLiRAD \cite{chou/1999}                     \\
+Radiação de Onda Longa          & \citeonline{harshvardhanetal/1987}          & \citeonline{harshvardhanetal/1987} \\
+Topo Camada Limite              & \citeonline{holstlagandboville/1993}        & \citeonline{holstlagandboville/1993} \\
+Base Camada Limite              & \citeonline{mellorandyamada/1974}           & \citeonline{mellorandyamada/1974} \\
+Esquema de Superfície           & SSiB \cite{sellersetal/1996}                & IBIS                                        \\
+% Modelo de Gelo                  & --                                          & SSiB                                        \\
+% Esquema de Nuvens               & --                                          & GFS                                         \\
+Convecção Profunda              & \citeonline{grell/1993}                    & Arakawa                                     \\
+Convecção Rasa                  & \citeonline{grell/1993}                    & \citeonline{tiedtke/1983} \\
+% Precipitação de Larga Escala    & --                                          & HUMO                                        \\
+% Fechamento Convectivo           & --                                          & 19 (Ensemble?)                              \\
+% Ozônio                          & 0 (Constante?)                              & 1 (Climatológico?)                          \\
+% Traçadores                      & 1 (?)                                       & 0 (?)                                       \\
+\bottomrule                                                                                  
+\end{tabular}
+\end{adjustbox}
+\end{center}
+\label{tab:model}
+\end{table}
+
+\section{\textit{Gridpoint Statistical Interpolation} (GSI)}
+\label{sec:descgsi}
+
+O \textit{Gridpoint Statistical Interpolation} (GSI) \cite{wuetal/2002,kleistetal/2009} é um sistema de assimilação de dados em espaço físico (i.e., a trajetória do modelo é corrigida a partir da minimização das incertezas das previsões no espaço das observações). Este sistema é capaz de utilizar observações convencionais e não convencionais, gerando análises variacionais em 3 ou 4 dimensões (3DVar ou 4DVar) e híbridas, em que uma matriz de covariâncias híbrida é utilizada na função custo variacional. No caso da análise híbrida do GSI, pode-se optar pelos algorítmos de filtro de Kalman por conjunto (\textit{Ensemble Kalman Filter}, EnKF) ou o filtro raiz quadrada por conjunto (\textit{Ensemble Square Root Filter}, EnSRF).
+
+O GSI é um sistema em constante desenvolvimento e é uma evolução do sistema \textit{Spectral Statistical Interpolation} (SSI). Diversos centros operacionais ao redor do mundo tem aplicado este sistema para gerar análises independentes, as quais são utilizadas na inicialização de modelo globais e regionais. A análise independente de um centro de PNT é representada não apenas pela análise proveniente de um ciclo de assimilação de dados, mas também utilizando-se a própria matriz de covariâncias e o próprio controle de qualidade das observações.
+
+Nas seções a seguir, são apresentadas as principais componentes que constituem o sistema GSI e que efetivamente foram abordadas no processo de elaboração do sistema híbrido 3DVar.
+
+\subsection{Sistema Observacional do GSI}
+
+Um sistema observacional, dentro do contexto da assimilação de dados meteorológicos, é a componente do sistema que envolve tudo o que está relacionado ao tratamento das observações. Em inglês, o termo \textit{observer} (ou sistema observacional), já foi empregado por \citeonline{griffithenichols/1994} em um estudo sobre a utilização de sistemas observacionais em assimilação de dados. O termo original não tem sido extensivamente explorado na literatura, porém será empregado aqui para uma descrição do sistema observacional do GSI. 
+
+Seguindo \citeonline{griffithenichols/1994}, um sistema observacional é a componente do sistema que se utiliza das observações meteorológicas para conduzir o sistema de modelagem (neste caso, o modelo de PNT) para o estado representado pelas observações. Neste sentido, uma descrição mais ampla poderia envolver, além das observações em si, técnicas como o \textit{Nudging} (ou relaxação Newtoniana), em que dados observacionais são utilizados para conduzir (ou forçar) o modelo a um estado mais próximo das observações, a partir da inclusão de termos extras nas equações prognósticas para esta finalidade. De forma mais restrita, um sistema observacional no contexto da assimilação de dados, é aquele que envolve as inovações (i.e., $\mathbf{y}^{o}-\textit{H}(\mathbf{x}^{b})$) e, portanto, as observações ($\mathbf{y}^{o}$), o estado do modelo ($\mathbf{x}^{b}$), o operador observação ($H$ ou $\mathbf{H}$) e a matriz de covariância dos erros de observação ($\mathbf{R}$). Sistemas de observações meteorológicas também podem ser considerados na descrição de um sistema observacional para um sistema de assimilação de dados, porque representam metodologias específicas para a representação das observações em si (as quais podem incluir a coleta, o processamento, o armazenamento e a disseminação dos dados), as quais podem estar incluídas no operador observação.
+
+No sistema GSI, o sistema observacional é realizado durante a minimização da função custo variacional e etapas adicionais são requeridas quando o sistema de assimilação é realizado de forma híbrida, por envolver alguma técnica de assimilação de dados por conjunto, a qual irá requerer a realização do sistema observacional para cada membro do conjunto. Tipicamente, o 3DVar calcula as inovações das observações durante a minimização da função custo e, a partir das matrizes de covariâncias dos erros de observação e previsão, parte das inovações são convertidas em incrementos de análise. Esta transformação é o que pode-se referenciar como \textit{observer}, seguindo a ideia de \citeonline{griffithenichols/1994} de que o sistema observacional contribui para a condução do estado do modelo para o estado representado pelas observações.
+
+Dentro da infraestrutura do GSI, o sistema observacional é construído de forma a armazenar as informações referentes as estatísticas de \textit{Observation minus Analysis} (OmA, ou Observação menos Análise), \textit{Observation minus Forecast} (OmF, ou Observação menos Previsão) e convergência da minimização da função custo. A informação da convergência da função custo, também pode ser extraída do sistema observacional, porque esta é dependente da quantidade de observações que são inseridas no sistema como um todo; a cada  novo ciclo de assimilação de dados, mais ou menos observações podem estar disponíveis, as quais impactam diretamente na convergência da função custo. 
+
+Na estrutura do sistema híbrido, as informações contidas no sistema observacional são importantes, pois é a partir delas que os membros do EnKF serão realizados, a partir dos quais as covariâncias do conjunto são extraídas. 
+
+\subsection{\textit{3-Dimensional Variational Assimilation} (3DVar)}
+\label{sec:3dvar}
+
+Na assimilação tridimensional variacional (3DVar), assume-se que a distribuição dos erros de observação e de modelagem é Gaussiana, ou seja, assume-se que média da distribuição dos erros das variáveis de estado seja zero e que o desvio padrão é característico do erro da observação analisada. Esta é a suposição mais largamente utilizada e a sua especificação é fundamental para o sucesso do processo de assimilação de dados variacional \cite{lorenc/1986}.
+
+No sistema 3DVar do GSI, a função custo (em sua forma mais geral) é representado pela Eq. \ref{eq:fcusto}:
+
+\begin{equation}
+    \label{eq:fcusto}
+    J(\mathbf{x}) = \underbrace{ \frac{1}{2} (\mathbf{x} - \mathbf{x}^{b})^{T} \mathbf{B}^{-1} (\mathbf{x} - \mathbf{x}^{b}) } _{J_{b}} + \underbrace{ \frac{1}{2} [\mathbf{y}^{o} - H(\mathbf{x})]^{T} \mathbf{R}^{-1} [\mathbf{y}^{o} - H(\mathbf{x})] }_{J_{o}}
+\end{equation}
+
+onde:
+
+\begin{itemize}
+	\item $\mathbf{x}$ é o vetor de estado a ser analisado (dimensão: $n$ x 1);
+	\item $\mathbf{x}^{b}$ é o vetor de estado previsto ($n$ x 1);
+	\item $\mathbf{x}-\mathbf{x}^{b}$ é o vetor incremento de análise ($n$ x 1);
+	\item $\mathbf{B}$ é a matriz de covariâncias dos erros de previsão ($n$ x $n$);
+	\item $\mathbf{y}^{o}$ é o vetor de estado observado ($p$ x 1);
+	\item $\mathbf{y}^{o}-H(\mathbf{x})$ é o vetor inovação ou incremento de observação ($p$ x $n$);
+	\item $H$ é o operador observação não linear (responsável por interpolar e relacionar as variáveis de estado e observação, nos respectivos pontos onde se encontram as observações);
+	\item $\mathbf{R}$ é a matriz de covariâncias dos erros de observação ($p$ x $p$);
+	\item $J_{b}$ representa o termo da função custo referente a previsão de curto prazo;
+	\item $J_{o}$ representa o termo da função custo referente as observações.
+\end{itemize}
+
+A função custo representada pela Eq. \ref{eq:fcusto} é quadrática e o resultado da sua minimização iterativa pode ser interpretada como uma medida da redução da distância entre a posição da variável de controle (i.e., a variável em torno da qual é realizada a minimização da função custo) e o ponto de mínimo local da função. 
+
+A análise 3DVar calculada pelo GSI está representada na Eq. \ref{eq:eqanl}. A análise é calculada a partir do mínimo da função custo representada pela Eq. \ref{eq:fcusto}, quando $\nabla{J}_{\mathbf{x}}=0$ implicando em $\mathbf{x}=\mathbf{x}^{a}$ (a derivação completa da Eq. \ref{eq:eqanl} e uma forma alternativa equivalente, a partir da Eq. \ref{eq:fcusto}, é apresentada no Apêndice \ref{apendiceI}). 
+
+\begin{equation}
+    \label{eq:eqanl}
+    \mathbf{x}^{a} = \mathbf{x}^{b} + (\mathbf{B}^{-1} + \mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H})^{-1}[(\mathbf{H}^{T}\mathbf{R}^{-1})(\mathbf{y}^{o} - H(\mathbf{x}^{b}))]
+\end{equation}
+
+Na Eq. \ref{eq:eqanl} tem-se que o estado da análise $\mathbf{x}^{a}$ é igual ao estado da previsão de curto prazo $\mathbf{x}^{b}$ mais a contribuição da inovação trazida pelas observações ($\mathbf{y}^{o} - H(\mathbf{x}^{b})$), ponderado pela razão entre as matrizes de covariâncias dos erros de observação ($\mathbf{R}$) e modelagem ($\mathbf{B}$). A presença da matriz $\mathbf{H}^{T}$ aplicada em $\mathbf{R}$, indica que as operações com as matrizes são realizadas em ponto de grade, i.e., $\mathbf{R}^{-1}$ é interpolada para o espaço do modelo.
+
+Tipicamente, em aplicações com um modelo atmosférico de circulação geral, o GSI analisa as seguintes variáveis: a função de corrente, a parte desbalanceada da velocidade potencial, a parte desbalanceada da temperatura virtual, a parte desbalanceada da pressão em superfície e a umidade relativa normalizada.
+
+\subsection{\textit{Ensemble Kalman Filter} (EnKF)}
+\label{sec:enkf}
+
+O filtro de Kalman por conjunto (\textit{Ensemble Kalman Filter}, EnKF) \cite{evensen/2003} é um algoritmo de assimilação de dados que gera um conjunto de análises em intervalos de tempo regulares que refletem real estado da atmosfera e a sua incerteza, através da média do conjunto e do seu espalhamento \cite{harlimehunt/2005}.
+
+O desenvolvimento do EnKF foi baseado em diferentes evoluções do filtro de Kalman original. O filtro de Kalman (FK) original é aplicado a problemas com dinâmica linear e uma extensão do FK para aplicações em problemas com dinâmica não linear, é encontrada no filtro de Kalman estendido (\textit{Extended Kalman Filter}, EKF). A solução dada pelo EKF está na linearização sucessiva da trajetória do modelo através da aplicação de um modelo tangente linear \cite{okaneefrederiksen/2008}. O EnKF, por outro lado, utiliza o próprio conjunto de previsões para fazer uma estimativa das covariâncias das previsões e das análises. Há que se assinalar, entretanto, que o EnKF introduzido originalmente por \citeonline{evensen/2003} é estocástico, no sentido de que as observações são perturbadas para gerar um conjunto de análises. Existe uma versão determinística do EnKF em que as observações não são perturbadas e o conjunto de análises é obtido utilizando-se um conjunto de previsões e observações (determinísticas) e que é utilizada pelo sistema GSI.
+
+As equações de análise, ganho de Kalman e estimativas das covariâncias dos erros de previsão e análise do FK linear são dadas por:
+
+\begin{align}
+    \label{eq:enkf_anl}
+    \mathbf{x}^{a} & = \mathbf{x}^{b} + \mathbf{K}[\mathbf{y}^{o}-\mathbf{H}(\mathbf{x}^{b})] \\
+    \label{eq:enkf_ganho}
+    \mathbf{K} & =\mathbf{P}^{b}\mathbf{H}^T(\mathbf{HP}^{b}\mathbf{H}^T+\mathbf{R})^{-1} \\
+    \label{eq:enkf_pb}
+    \mathbf{P}^{b} & = \mathbf{M}\mathbf{P}^{a}\mathbf{M}^{T} + \mathbf{Q} \\
+    \label{eq:enkf_pa}
+    \mathbf{P}^{a} & =(\mathbf{I}+\mathbf{KH})\mathbf{P}^{b}
+\end{align}
+
+onde:
+
+\begin{itemize}
+    \item $\mathbf{x}^{b}$: vetor de estado do modelo, representando pelos \textit{priors} (i.e., previsões; dimensão: $m$ x $1$);
+    \item $\mathbf{x}^{a}$: vetor de estado atualizado, representado pelos \textit{posteriors} (i.e., análises) em ponto de grade ($m$ x $1$);
+    \item $\mathbf{y}^{o}$: vetor observação ($p$ x $1$);
+    \item $\mathbf{H}$: operador observação linear;
+    \item $\mathbf{P}^{b}$: matriz de covariâncias dos erros de previsão ($m$ x $m$);
+    \item $\mathbf{P}^{a}$: matriz de covariâncias dos erros de análise ($m$ x $m$);
+    \item $\mathbf{R}$: matriz de covariâncias dos erros de observação ($p$ x $p$);
+    \item $\mathbf{K}$: matriz ganho de Kalman;
+    \item $\mathbf{M}$: é o modelo com dinâmica linear;
+    \item $\mathbf{Q}$: é a matriz de covariâncias dos erros aleatórios do modelo linear.
+\end{itemize}
+
+Na Eq. \ref{eq:enkf_pb}, a matriz $\mathbf{P}^{a}$ é calculada em um instante de tempo anterior (i.e., $t=t^{n-1}$), de forma que as equações são calculadas no instante de tempo atual (i.e., $t=t^{n}$) e consequentemente e Eq. \ref{eq:enkf_pa} fornece uma atualização de $\mathbf{P}^{a}$ a partir de $\mathbf{P}^{b}$ no instante de tempo atual (i.e., $t=t^{n}$). A Eq. \ref{eq:enkf_pb} junto com o prognóstico do modelo (i.e., $\mathbf{M}_{t^{n} \rightarrow t^{n+1}}$) são chamadas de equações de previsão e as Eqs. \ref{eq:enkf_anl}, \ref{eq:enkf_ganho} e \ref{eq:enkf_pa} são chamadas de equações de correção. A Eq. \ref{eq:enkf_anl} representa a atualização do estado da análise utilizada pelo FK. A Eq. \ref{eq:enkf_ganho} representa o ganho de Kalman ($\mathbf{K}$) e nela está representada a covariância multivariada entre as estimativas anteriores das observações (i.e., as observações interpoladas nos pontos de grade do modelo) e as variáveis de análise do modelo, além de um mapeamento dos incrementos das observações nos pontos das observações a fim de analisar as variáveis de análise nos pontos de grade do modelo. As Eqs. \ref{eq:enkf_anl} e \ref{eq:enkf_ganho} são chamadas também de equações de atualização e guardam semelhança com a equação de análise do esquema de IO, em que a matriz peso $\mathbf{W}$ é fixa (i.e., não é atualizada no tempo pelas covariâncias dos erros de previsão e observação). Além disso, o FK linear é dito ótimo e consequentemente minimiza uma função custo semelhante a função custo do 3DVar.
+
+No caso do FK linear, a estimativa da covariância dos erros de previsão é dada em função da dinâmica linear do sistema. Para o caso em que é considerado um conjunto de previsões, as Eqs. \ref{eq:enkf_anl} e \ref{eq:enkf_ganho} podem ser reescritas da seguinte forma:
+
+\begin{align}
+    \label{eq:enkf_anle}
+    \mathbf{x}^{a}_{k} & = {\mathbf{x}^{b}_{k}} + \mathbf{K}_{e}[\mathbf{y}^{o}-{\mathbf{H}(\mathbf{x}^{b}_{k})}] \\
+    \label{eq:enkf_ganhoe}
+    \mathbf{K}_{e} & = {\mathbf{P}^{b}_{e}}\mathbf{H}^{T}({\mathbf{H}\mathbf{P}^{b}_{e}}\mathbf{H}^{T}+\mathbf{R})^{-1}
+\end{align}
+
+em que o subscrito $e$ representa o conjunto de previsões e o subscrito $k$ cada membro do conjunto de $K$ previsões.
+
+Na Eq. \ref{eq:enkf_ganhoe}, a matriz de covariâncias dos erros de previsão do ganho de Kalman, é estimada por:
+
+\begin{equation}
+    \label{eq:enkf_pbe1}
+    {\mathbf{P}^{b}_{e}} = \frac{1}{K-1}\sum_{k=1}^{K}({\mathbf{x}^{b}_{k}}-\mathbf{\bar{x}}^{b})({\mathbf{x}^{b}_{k}}-\mathbf{\bar{x}}^{b})^{T}
+\end{equation}
+
+onde:
+
+\begin{itemize}
+    \item $K$: é o número de membros do conjunto de previsões;
+    \item ${\mathbf{x}^{b}_{k}}$: representa o $k$-ésimo membro do conjunto de previsões;
+    \item $\mathbf{\bar{x}}^{b}$: representa a média do conjunto de previsões (i.e., $\mathbf{\bar{x}}^{b} =  \frac{1}{K}\sum_{i=1}^{K}\mathbf{x}^{b}_{i}$).
+\end{itemize}
+
+Na Eq. \ref{eq:enkf_pbe1}, a média do conjunto ($\mathbf{\bar{x}}^{b}$) sobre $K$ membros tende a enviesar a variância do erro de previsão porque todos os membros são utilizados na estimativa de sua própria covariância \cite{kalnay/2003}. Logo, a estimativa das covariâncias é feita com base na normalização em $K-1$ membros a fim de se permitir que a estimativa da variância não seja feita com base em toda a população. 
+
+A média do conjunto de análises, a partir da Eq. \ref{eq:enkf_anle}, pode ser escrita como:
+
+\begin{equation}
+    \label{eq:enkf_anlmed}
+    {\mathbf{{\bar{x}}}^{a}} = {\mathbf{{\bar{x}}}^{b}} + \mathbf{K}_{e}[\mathbf{y}^{o}-\mathbf{H}(\mathbf{\bar{x}}^{b})]
+\end{equation}
+
+A covariância do erro conjunto de previsões pode também ser convenientemente expressa da seguinte forma:
+
+\begin{equation}
+    \label{eq:enkf_pbe2}
+    {\mathbf{P}^{b}_{e}} = (\mathbf{X}^{\prime{b}})(\mathbf{X}^{\prime{b}})^{T}
+\end{equation}
+
+onde:
+
+\begin{itemize}
+    \item $\mathbf{X}^{\prime{b}}$: é a matriz de perturbação do conjunto de $K$ previsões;
+    \begin{equation*}
+        \mathbf{X}^{\prime{b}}=\frac{1}{\sqrt{K-1}}(\mathbf{x}^{b}_{1}-\mathbf{\bar{x}}^{b}, \  \mathbf{x}^{b}_{2}-\mathbf{\bar{x}}^{b}, \ \mathbf{x}^{b}_{3}-\mathbf{\bar{x}}^{b}, \ \ldots, \  \mathbf{x}^{b}_{k}-\mathbf{\bar{x}}^{b})
+    \end{equation*}
+    \item $\mathbf{X}^{b}$: é a matriz do conjunto de $K$ previsões.
+    \begin{equation*}
+        \mathbf{X}^{b}=\frac{1}{\sqrt{K-1}}(\mathbf{x}_{1}, \ \mathbf{x}_{2}, \ \mathbf{x}_{3}, \ \ldots, \  \mathbf{x}_{k})
+    \end{equation*}
+\end{itemize}
+
+Além de uma estimativa da covariância dos erros de previsão conjunto dada pela Eq. \ref{eq:enkf_pbe2}, o EnKF fornece também uma estimativa da covariância dos erros do conjunto das análises:
+
+\begin{equation}
+    \label{eq:enkf_pae}
+    \mathbf{P}^{a}_{e} = (\mathbf{I}-\mathbf{K}_{e}\mathbf{H}){\mathbf{P}^{b}_{e}}(\mathbf{I}-\mathbf{K}_{e}\mathbf{H})^{T}
+\end{equation}
+
+onde:
+
+\begin{itemize}
+    \item $\mathbf{P}^{a}_{e}$: é a estimativa da covariância dos erros do conjunto de análises (dimensão: $m$ x $m$);
+    \item $\mathbf{K}$: é a matriz ganho de Kalman do conjunto;
+    \item $\mathbf{P}^{b}_{e}$: é a estimativa da covariância dos erros do conjunto de previsões ($m$ x $m$);
+\end{itemize}
+
+\subsection{\textit{Ensemble Square Root Filter} (EnSRF)}
+\label{sec:ensrf}
+
+Um conjunto de previsões muito pequeno pode fazer com que o EnKF subestime a covariância do erro da análise (Eq. \ref{eq:enkf_pa}) devido a amostragem insuficiente da população \cite{okaneefrederiksen/2008}. Uma forma de se melhorar o espalhamento (i.e., a medida da diferença entre os membros) do conjunto é através da perturbação das observações assimiladas em conjunto com a inflação do conjunto para aumentar o espalhamento. Outra possibilidade é escolher os modos de crescimento mais rápidos para perturbar a condição inicial e  formar um conjunto de previsões (e.g., utilizando-se o método de \citeonline{zhangekrishnamurti/1999}, em que os modos de perturbação são obtidos a partir da aplicação de Funções Ortogonais Empíricas). Alternativamente, outros tipos de filtros podem ser determinados com o objetivo de se amenizar problemas de amostragem. Exemplos de filtros alternativos, incluem os filtros do tipo raiz quadrada, que não requerem que as observações sejam perturbadas.
+
+Um filtro do tipo raiz quadrada, pode então ser determinado com a finalidade de ser numericamente mais estável e preciso, além de não depender diretamente da estimativa das covariâncias dos erros de previsão ($\mathbf{P}^{b}$) na estimativa das covariâncias dos erros de análise ($\mathbf{P}^{a}$). Para o caso do FK linear, o exemplo a ser dado é o algoritmo de Potter \cite{potterestern/1963} para um filtro do tipo raiz quadrada, em que $\mathbf{P}^{b}$ é substituída pela sua raiz quadrada. Segundo \citeonline{tippettetal/2003}, a não unicidade da raiz quadrada de uma matriz de covariâncias (pois diferentes conjuntos de previsões podem ter a mesma matriz de covariâncias) permite que diferentes algorítimos sejam desenvolvidos.
+
+A implementação do filtro de Kalman por conjunto dentro do sistema GSI, segue a implementação do filtro tipo raiz quadrada por conjunto (\textit{Ensemble Square Root Filter} - EnSRF, \citeonline{whitakerehamill/2002}). Nesta implementação é possível alternar entre uma versão que se utiliza de perturbações adicionadas as observações (filtro estocástico EnKF) e uma versão que não perturba as observações (filtro determinístico EnSRF).
+
+As equações de correção e ganho do EnKF são utilizadas para determinar o conjunto de análise e a estimativa da covariância do erro da análise para o EnSRF. Entretanto, no EnSRF utiliza-se a equação de perturbação do conjunto de análises (Eq. \ref{eq:ensrf_pertanl}) dado em função da matriz ganho de Kalman e da matriz de perturbações do conjunto de previsões:
+
+\begin{align}
+    \label{eq:ensrf_alpha}
+    \alpha & = \Bigg[ 1 + \sqrt{\frac{R}{(\mathbf{H}\mathbf{P}^{b}_{e}\mathbf{H}^{T} + R)}}\Bigg]^{-1} \\
+    \label{eq:ensrf_ganhoe}
+    \mathbf{K}_{e} & = {\mathbf{P}^{b}_{e}}\mathbf{H}^{T}({\mathbf{H}\mathbf{P}^{b}_{e}}\mathbf{H}^{T}+\mathbf{R})^{-1} \\
+    \label{eq:ensrf_ganhopert} 
+    \mathbf{\tilde{K}}_{e} & = \alpha \mathbf{K}_{e} \\
+    \label{eq:ensrf_anle}
+    \mathbf{x}^{a}_{k} & = {\mathbf{x}^{b}_{k}} + \mathbf{\tilde{K}}_{e}[\mathbf{y}^{o}-{\mathbf{H}(\mathbf{x}^{b}_{k})}] \\
+    \label{eq:ensrf_pertanl}
+    \mathbf{X}^{\prime{a}} & = \mathbf{X}^{\prime{b}} - \mathbf{\tilde{K}}_{e} \mathbf{H} \mathbf{X}^{\prime{b}}
+\end{align}
+    
+onde:
+
+\begin{itemize}
+    \item $\mathbf{X}^{\prime{a}}$: é a perturbação (desvios de cada membro em relação a média) do conjunto de $K$ análises;
+    \item $\mathbf{X}^{\prime{b}}$: é a perturbação do conjunto de $K$ previsões;
+    \item $\mathbf{K}_{e}$: é a matriz ganho de Kalman (definida da mesma forma que na Eq. \ref{eq:enkf_ganhoe});
+    \item $\mathbf{\tilde{K}}_{e}$: é a matriz ganho utilizada para atualizar o conjunto de perturbações do conjunto de analises;
+    \item $R$: é um escalar representando o erro da observação assimilada;
+    \item $\mathbf{H}$: é o operador observação linear;
+    \item $\mathbf{P}^{b}$: é a matriz de covariância dos erros do conjunto de previsões;
+    \item $\alpha$: é um escalar.
+\end{itemize}
+
+Uma das características desta implementação do EnSRF dentro do sistema GSI, é a assimilação serial das observações, i.e., cada tipo de observação é assimilada por vez. Este procedimento pode ainda ser feito assimilando-se as observações em uma ordem diferente da outra (o que consequentemente pode levar a diferentes estados de balanço entre modelo e observações, com maior ou menor grau de erro da análise, ou ainda menor tempo computacional na assimilação \citeonline{nerger/2015}). Nesse sentido, quando o primeiro tipo de observação é assimilado, o estado atualizado do conjunto de análises torna-se o estado do conjunto de previsões para o próximo tipo de observação a ser assimilado. Por este motivo, $R$ está indicado na Eq. \ref{eq:ensrf_alpha} ao invés de $\mathbf{R}$.
+
+Na Eq. \ref{eq:ensrf_ganhopert}, o escalar $\alpha$ modula o ganho de Kalman na atualização das perturbações do conjunto de análise de acordo com o erro do tipo de observação assimilada.
+
+Ao final do processo de atualização dos membros do conjunto de análises, a estimativa da covariância dos erros do conjunto de análises é dada pela Eq. \ref{eq:enkf_pa}.
+
+\section{Dados} 
+
+Os dados a serem utilizados para a realização dos experimentos com a nova matriz de covariâncias e com o sistema híbrido 3DVar, são os mesmos utilizados na operação do G3DVAR. O conjunto de dados é constituído por dados de temperatura da superfície do mar e dados de cobertura de neve em ponto de grade (dados obtidos do NCEP) e análises do GSI no formato espectral (global, resolução TQ0062L028 e TQ0299L064), - estes dados são utilizados pelo pré-processamento do modelo de circulação geral do CPTEC; dados de observação no formato PrepBUFR (obtidos também através do NCEP), - estes dados são utilizados para assimilação pelo GSI e compreendem dados de observações convencionais (de superfície e ar superior) além de vento por satélite. Dados não convencionais no formato BUFR (e.g., dados de radiâncias dos sensores AMSU/A, HRS4, IASI, AIRS e MHS, além de dados de refratividade de Rádio Ocultação GPS) com cobertura global. Além disso, são utilizados também dados de correção do viés da massa e do ângulo dos satélites. Estes dados são atualizados ao longo do ciclo de assimilação de dados (com excessão dos dados para a correção da massa e ângulo dos satélites). O filtro de Kalman por conjunto (EnKF/EnSRF) também utiliza o mesmo conjunto de observações que a componente variacional do sistema GSI (Tabela \ref{tab:mobs}), sendo este comparável a assimilação operacional em outros centros (e.g., NCEP).
+
+\begin{table}[H]
+\caption{Observações tipicamente assimiladas pelo sistema GSI no CPTEC.}
+\begin{center}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{>{\centering\bfseries}m{2.5cm} >{\centering}m{2.5cm} >{\centering\arraybackslash}m{10cm}}
+\toprule
+\toprule
+\textbf{Mnemônico} & \textbf{Tipo} & \textbf{Descrição} \\
+\midrule
+\textbf{airsbufr} & Não Convencional & Radiâncias do AMSU-A e AIRS do satélite AQUA \\ 
+\textbf{amsuabufr} & Não Convencional & Radiâncias do AMSU-A 1b (temperatura de brilho) dos satélites NOAA-15, 16, 17, 18 e 19 e METOP-A \\ 
+\textbf{hirs4bufr} & Não Convencional & Radiâncias do HIRS4 1b dos satélites NOAA 18, 19 e METOP-A \\ 
+\textbf{mhsbufr}   & Não Convencional & Sondagens de umidade do MHS dos satélites NOAA 18, 19 e METOP-A \\ 
+\textbf{gpsrobufr} & Convencional     & Refratividade de Rádio Ocultação GPS \\ 
+\textbf{iasibufr}  & Não Convencional & Sondagens do IASI do satélite METOP-A \\ 
+\textbf{prepbufr}  & Convencional     & Observações convencionais incluindo $ps$, $t$, $q$, $pw$, $uv$, $spd$, $dw$ e $sst$ a partir de plataformas de observação como o METAR, SYNOP, radiossondas e outras \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{center}
+\label{tab:mobs}
+\end{table}

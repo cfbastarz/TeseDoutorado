@@ -1,0 +1,253 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{APÊNDICE C - Filtro Recursivo 1D - Grau 1}
+\label{apendiceIV}
+
+Neste apêndice é apresentada a derivação de um filtro recursivo unidimensional de grau 1 baseado no trabalho de \citeauthoronline{purseretal/2003a} (2003a). Os desenvolvimentos apresentados pelo autor sugerem a construção de um filtro recursivo de 2 ou mais dimensões (aplicado em 2 ou mais dimensões) a partir de um polinômio construído a com a expansão em série de Taylor de uma função para um operador de diferenças finitas ($D^{*}_{(n)}$). A determinação deste operador é deveras complicada e é baseada na teoria do ``cálculo de operadores'' \cite{dahlquistandbjorck/1974}. Portanto, a derivação apresentada aqui é fornecida com fins didáticos e dará suporte para a derivação de um filtro recursivo unidimensional de grau 2, o qual é utilizado no trabalho de \citeauthoronline{purseretal/2003a} (2003a). Em algumas partes da derivação, será necessário fazer referências à algumas equações e tabelas escritas no trabalho de \citeauthoronline{purseretal/2003a} (2003a), as quais estarão indicadas por um par de colchetes ``[ ]''.
+ 
+Partindo-se do polinômio da Eq. [3.12] de \citeauthoronline{purseretal/2003a} (2003a):
+
+\begin{equation}
+\label{apIV_eq:1}
+  \begin{aligned}
+  D^{*}_{(n)} = {} & 1 + b_{1,1} \frac{\sigma^{2}}{2} K + \left[ b_{1,2} \left(\frac{\sigma^{2}}{2}\right) + \frac{b_{2,2}}{2!} \left(\frac{\sigma^{2}}{2}\right)^2 \right] K^{2} + \dots \\
+  & + \left[\sum_{j=1}^{n}{\frac{b_{j,n}}{j!} \left(\frac{\sigma^{2}}{2}\right)^{j} }\right] K^{n}
+  \end{aligned}
+\end{equation}
+
+Onde:
+
+\begin{itemize}
+	\item $D^{*}_{(n)}$ é um operador de diferenças finitas composto pela $n$-ézima expansão de $K$;
+	\item $K$ é um operador de diferenças finitas;
+	\item $b_{j,n}$ são coeficientes para o filtro quasi-Gaussiano (segundo a Tabela [1] de \citeauthoronline{purseretal/2003a}, 2003a);
+	\item $\sigma$ é a razão entre $a$ e $\delta{x}$, de forma que $\sigma = \frac{a}{\delta{x}}$;
+	\item $a$ é o comprimento da grade unidimensional;
+	\item $\delta{x}$ é o espaçamento da grade.
+\end{itemize}
+
+Utiliza-se a forma da Eq. \ref{apIV_eq:2} a seguir, para representar a Eq. \ref{apIV_eq:1}:
+
+\begin{equation}
+\label{apIV_eq:2}
+D^{*}_{(n)} = \prod_{p=1}^{n}{\left(1 - \frac{K}{\kappa_{p}}\right)}
+\end{equation}
+
+Expandindo-se a Eq. \ref{apIV_eq:2} para $n=1$ (expansão de primeira ordem), obtemos:
+
+\begin{equation}
+\label{apIV_eq:3}
+D^{*}_{(1)} = 1 - \frac{K}{\kappa_{1}}
+\end{equation}
+
+Comparando-se a Eq. \ref{apIV_eq:3} com a Eq. \ref{apIV_eq:1} (quando $n=1$), obtemos:
+
+\begin{equation}
+\label{apIV_eq:4}
+- \frac{1}{\kappa_{1}} = b_{1,1} \frac{\sigma^{2}}{2}
+\end{equation}
+
+Na Tabela [1] de \citeauthoronline{purseretal/2003a} (2003a), temos que $b_{1,1} = 1$.
+
+Logo,
+
+% \begin{equation}
+% \label{apIV_eq:5}
+% - \frac{1}{\kappa_{1}} = \frac{\sigma^{2}}{2} \\
+% \end{equation}
+
+% \begin{equation}
+% \label{apIV_eq:6}
+% - \kappa_{1} = \frac{2}{\sigma^{2}}
+% \end{equation}
+
+% E portanto,
+
+% \begin{equation}
+% \label{apIV_eq:7}
+% \kappa_{1} = - \frac{2}{\sigma^{2}} \text{, com $\sigma \neq 0$}
+% \end{equation}
+
+\begin{align}
+\label{apIV_eq:5}
+- \frac{1}{\kappa_{1}} &= \frac{\sigma^{2}}{2} \\
+- \kappa_{1} &= \frac{2}{\sigma^{2}} \\
+\kappa_{1} &= - \frac{2}{\sigma^{2}} \text{, com $\sigma \neq 0$}
+\end{align}
+
+Onde:
+
+\begin{itemize}
+	\item $\kappa_{1}$ é a raiz de um polinômio $K$ (que é o operador de diferenças finitas).
+\end{itemize}
+
+Entre as Eqs. [A.3] e [A.4] de \citeauthoronline{purseretal/2003a} (2003a), está estabelecida a equação:
+
+\begin{equation}
+\label{apIV_eq:8}
+\omega_{p} = 1 - \frac{\kappa_{p}}{2}
+\end{equation}
+
+Para $p = 1$:
+
+\begin{equation}
+\label{apIV_eq:9}
+\omega_{1} = 1 - \frac{\kappa_{1}}{2}
+\end{equation}
+
+E portanto,
+
+\begin{equation}
+\label{apIV_eq:10}
+\omega_{1} = 1 + \frac{1}{\sigma^{2}} \text{, com $\sigma \neq 0$}
+\end{equation}
+
+Onde:
+
+\begin{itemize}
+	\item $\omega_{1}$ é um coeficiente de uma equação quadrática em $z$, cujas raízes são os pares conjugados de $\zeta_{p}$.
+\end{itemize}
+
+Partindo da Eq. [A.4] de \citeauthoronline{purseretal/2003a} (2003a):
+
+\begin{equation}
+\label{apIV_eq:11}
+\zeta_{p} = \left[\omega_{p} + i\right(\omega_{p}^{2} - 1\left)^{\frac{1}{2}}\right]^{\pm 1}
+\end{equation}
+
+Para $p = 1$:
+
+\begin{equation}
+\label{apIV_eq:12}
+\zeta_{1} = \left[\omega_{1} + i\right(\omega_{1}^{2} - 1\left)^{\frac{1}{2}}\right]^{\pm 1}
+\end{equation}
+
+Onde:
+
+\begin{itemize}
+	\item $\zeta_{1}$ é uma raiz complexa de $z$, e ela é representada por $\zeta_{1}^{'}$ e $\zeta_{1}^{''}$.
+\end{itemize}
+
+Nesta etapa, é importante definir as formas complexas de $\zeta_{1}^{'}$ e $\zeta_{2}^{'}$. Para isto, utilizamos as formas representadas nas Eqs. \ref{apIV_eq:10} e \ref{apIV_eq:12}:
+
+% \begin{equation}
+% \label{apIV_eq:13}
+% \zeta_{1}^{'} = \left[\omega_{1} + i\right(\omega_{1}^{2} - 1\left)^{\frac{1}{2}}\right]^{+1}
+% \end{equation}
+
+% \begin{equation}
+% \label{apIV_eq:14}
+% \zeta_{1}^{'} = \left(1 + \frac{1}{\sigma^{2}}\right) + i \left[ \left(1 + \frac{1}{\sigma^{2}}\right)^{2} - 1 \right]^\frac{1}{2}
+% \end{equation}
+
+% \begin{equation}
+% \label{apIV_eq:15}
+% \zeta_{1}^{'} = \left(\frac{\sigma^{2} + 1}{\sigma^{2}}\right) + i \left[ \left(\frac{\sigma^{2} + 1}{\sigma^{2}}\right)^{2} - 1 \right]^\frac{1}{2}
+% \end{equation}
+
+% \begin{equation}
+% \label{apIV_eq:16}
+% \zeta_{1}^{'} = \left(\frac{\sigma^{2} + 1}{\sigma^{2}}\right) + i \left[ \frac{\left( \sigma^{2} + 1 \right)^{2} - \sigma^{4}}{\sigma^{4}} \right]^\frac{1}{2}
+% \end{equation}
+
+% \begin{equation}
+% \label{apIV_eq:17}
+% \zeta_{1}^{'} = \left(\frac{\sigma^{2} + 1}{\sigma^{2}}\right) + i \left[ \frac{\sigma^{4} + 2\sigma^{2} + 1 - \sigma^{4}}{\sigma^{4}} \right]^\frac{1}{2}
+% \end{equation}
+
+% \begin{equation}
+% \label{apIV_eq:18}
+% \zeta_{1}^{'} = \left(\frac{\sigma^{2} + 1}{\sigma^{2}}\right) + i \left[ \frac{2\sigma^{2} + 1}{\sigma^{4}} \right]^\frac{1}{2}
+% \end{equation}
+
+% \begin{equation}
+% \label{apIV_eq:19}
+% \zeta_{1}^{'} = \left(\frac{\sigma^{2} + 1}{\sigma^{2}}\right) + i \left( \frac{2\sigma^{2} + 1}{\sigma^{4}} \right)^\frac{1}{2}
+% \end{equation}
+
+\begin{align}
+\label{apIV_eq:13}
+\zeta_{1}^{'} & = \left[\omega_{1} + i\right(\omega_{1}^{2} - 1\left)^{\frac{1}{2}}\right]^{+1} \\
+\zeta_{1}^{'} & = \left(1 + \frac{1}{\sigma^{2}}\right) + i \left[ \left(1 + \frac{1}{\sigma^{2}}\right)^{2} - 1 \right]^\frac{1}{2} \\
+\zeta_{1}^{'} & = \left(\frac{\sigma^{2} + 1}{\sigma^{2}}\right) + i \left[ \left(\frac{\sigma^{2} + 1}{\sigma^{2}}\right)^{2} - 1 \right]^\frac{1}{2} \\
+\zeta_{1}^{'} & = \left(\frac{\sigma^{2} + 1}{\sigma^{2}}\right) + i \left[ \frac{\left( \sigma^{2} + 1 \right)^{2} - \sigma^{4}}{\sigma^{4}} \right]^\frac{1}{2} \\
+\zeta_{1}^{'} & = \left(\frac{\sigma^{2} + 1}{\sigma^{2}}\right) + i \left[ \frac{\sigma^{4} + 2\sigma^{2} + 1 - \sigma^{4}}{\sigma^{4}} \right]^\frac{1}{2} \\
+\zeta_{1}^{'} & = \left(\frac{\sigma^{2} + 1}{\sigma^{2}}\right) + i \left[ \frac{2\sigma^{2} + 1}{\sigma^{4}} \right]^\frac{1}{2} \\
+\zeta_{1}^{'} & = \left(\frac{\sigma^{2} + 1}{\sigma^{2}}\right) + i \left( \frac{2\sigma^{2} + 1}{\sigma^{4}} \right)^\frac{1}{2}
+\end{align}
+
+O par conjugado de $\zeta_{1}^{'}$ é $\zeta_{1}^{''}$, e portanto obtemos: 
+
+\begin{equation}
+\label{apIV_eq:20}
+\zeta_{1}^{''} = \left[ \left(\frac{\sigma^{2} + 1}{\sigma^{2}}\right) + i \left( \frac{2\sigma^{2} + 1}{\sigma^{4}} \right)^\frac{1}{2} \right]^{-1} \text{, com $\sigma \neq 0$}
+\end{equation}
+
+Segundo \citeauthoronline{purseretal/2003a} (2003a), a menor raiz entre $\zeta^{'}_{1}$ e $\zeta^{''}_{1}$, permite a fatoração da Eq. [A.5].
+
+A partir da Eq. [A.5], obtemos:
+
+\begin{equation}
+\label{apIV_eq:21}
+1 - \frac{K}{\kappa_{p}} = \left( \frac{1 - \zeta_{p}z^{-1}}{1 - \zeta_{p}} \right)\left( \frac{1 - \zeta_{p}z}{1 - \zeta_{p}} \right)
+\end{equation}
+
+Para $p = 1$:
+
+\begin{equation}
+\label{apIV_eq:22}
+1 - \frac{K}{\kappa_{1}} = \left( \frac{1 - \zeta_{1}z^{-1}}{1 - \zeta_{1}} \right)\left( \frac{1 - \zeta_{1}z}{1 - \zeta_{1}} \right) \text{, com $|\zeta_{1}| \neq 1$}
+\end{equation}
+
+A partir das Eqs. [A.6] e [A.7], obtemos:
+
+% \begin{equation}
+% \label{apIV_eq:23}
+% A = \prod_{p=1}^{n}{\left( \frac{1 - \zeta_{p}z^{-1}}{1 - \zeta_{p}} \right)}
+% \end{equation}
+
+% \begin{equation}
+% \label{apIV_eq:24}
+% B = \prod_{p=1}^{n}{\left( \frac{1 - \zeta_{p}z}{1 - \zeta_{p}} \right)}
+% \end{equation}
+
+\begin{align}
+\label{apIV_eq:23}
+\mathbf{A} & = \prod_{p=1}^{n}{\left( \frac{1 - \zeta_{p}z^{-1}}{1 - \zeta_{p}} \right)} \\
+\mathbf{B} & = \prod_{p=1}^{n}{\left( \frac{1 - \zeta_{p}z}{1 - \zeta_{p}} \right)}
+\end{align}
+
+Para $n = 1$:
+
+% \begin{equation}
+% \label{apIV_eq:25}
+% A = \left( \frac{1 - \zeta_{1}z^{-1}}{1 - \zeta_{1}} \right)
+% \end{equation}
+
+% e
+
+% \begin{equation}
+% \label{apIV_eq:26}
+% B = \left( \frac{1 - \zeta_{1}z}{1 - \zeta_{1}} \right) \text{, com $|\zeta_{1}| \neq 1$}
+% \end{equation}
+
+\begin{align}
+\label{apIV_eq:24}
+\mathbf{A} & = \left( \frac{1 - \zeta_{1}z^{-1}}{1 - \zeta_{1}} \right) \\
+\label{apIV_eq:25}
+\mathbf{B} & = \left( \frac{1 - \zeta_{1}z}{1 - \zeta_{1}} \right) \text{, com $|\zeta_{1}| \neq 1$}
+\end{align}
+
+Onde:
+
+\begin{itemize}
+	\item $z$ é um operador de deslocamento para a direita;
+	\item $z^{-1}$ é um operador de deslocamento para a esquerda.
+\end{itemize}
+
+Com as Eqs. \ref{apIV_eq:24} e \ref{apIV_eq:25}, finalmente obtemos a representação de um filtro recursivo unidimensional em termos de $z$, $z^{-1}$ e $\zeta_{1}$:
+
+\begin{equation}
+\label{apIV_eq:27}
+D^{*}_{(1)} = \left( \frac{1 - \zeta_{1}z^{-1}}{1 - \zeta_{1}}  \right) \left( \frac{1 - \zeta_{1}z}{1 - \zeta_{1}}  \right)
+\end{equation}

@@ -1,0 +1,246 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{APÊNDICE B - Pré-condicionamento da Função Custo Variacional com base em B Completa}
+\label{apendiceII}
+
+O sistema GSI possui algumas metodologias para a minimização da função custo variacional (3D ou 4D). Dado o custo computacional relacionado às dimensões dos vetores de estado e observação, além da matriz de covariâncias dos erros de previsão, técnicas computacionais são introduzidas a fim de minimizar o custo computacional envolvido. Como exemplo, é apresentado a seguir o pré-condicionamento da função custo variacional tridimensional com base na matriz $\mathbf{B}$ completa.
+
+Seja a Eq. \ref{apII_eq:1} a função custo variacional tridimensional na forma incremental:
+\begin{equation}
+\label{apII_eq:1}
+  J(\mathbf{\delta{x}}) = \frac{1}{2}(\mathbf{\delta{x}})^{T}\mathbf{B}^{-1}(\mathbf{\delta{x}}) + \frac{1}{2}[\mathbf{y}^{\prime{o}} - \mathbf{H}(\mathbf{\delta{x}})]^{T}\mathbf{R}^{-1}[\mathbf{y}^{\prime{o}} - \mathbf{H}(\mathbf{\delta{x}})]
+\end{equation}
+
+Onde:
+
+\begin{itemize}
+  \item $\mathbf{\delta{x}}$ é o vetor incremento de análise dado por $\mathbf{\delta{x}} = \mathbf{x} - \mathbf{x}^{b}$, em que $\mathbf{x}$ é o vetor de estado a ser analisado (a verdade) e $\mathbf{x}^{b}$ é o vetor de estado do background;
+  \item $\mathbf{B}$ é a matriz de covariâncias dos erros de background;
+  \item $\mathbf{y}^{\prime{o}}$ é o vetor inovação, dado por $\mathbf{y}^{\prime{o}}=\mathbf{y}^o - \textit{H}(\mathbf{x}^{b})$, em que $\mathbf{y^o}$ é o vetor observação e $\textit{H}$ o operador observação não linear;
+  \item $\mathbf{R}$ é a matriz de covariâncias dos erros de observação;
+  \item $\mathbf{H}$ é o operador observação linear.
+\end{itemize}
+
+O cálculo da análise variacional é feito a partir da minimização da função custo (Eq. \ref{apII_eq:1}), ou seja, $\nabla_{\mathbf{\delta{x}}}J=0$. Um algorítimo de minimização bastante comum é o Gradiente Conjugado Precondicionado. Este tipo de algoritmo apresenta a vantagem de convergir rapidamente para a solução. Para a aplicação deste algoritmo, algumas abordagens do método variacional consideram, como pré-condicionamento, a matriz de covariância dos erros de previsão ($\mathbf{B}$) completa, como é o caso do Gridpoint Statistical Interpolation (GSI). Alguns sistemas variacionais realizam a minimização da função custo considerando a raiz quadrada da matriz $\mathbf{B}$.
+
+Para aplicar o algoritmo do Gradiente Conjugado Precondicionado, é necessária a definição de uma nova variável $\mathbf{z}$, definida como:
+
+\begin{equation}
+\label{apII_eq:2}
+\mathbf{z} = \mathbf{B}^{-1}\mathbf{\delta{x}}
+\end{equation}
+
+Esta nova variável será utilizada para calcular $\nabla_{\mathbf{\delta{x}}}J=0$. Substituindo-se a Eq. \ref{apII_eq:2} na Eq. \ref{apII_eq:1}:
+
+\begin{equation}
+\label{apII_eq:3}
+  J(\mathbf{\delta{x}}) = \frac{1}{2}(\mathbf{\delta{x}})^{T}\mathbf{z} + \frac{1}{2}[\mathbf{y}^{\prime{o}} - \mathbf{H}(\mathbf{\delta{x}})]^{T}\mathbf{R}^{-1}[\mathbf{y}^{\prime{o}} - \mathbf{H}(\mathbf{\delta{x}})]
+\end{equation}
+
+Desenvolvendo a Eq. \ref{apII_eq:3}, obtemos:
+
+% \begin{equation}
+% \label{apII_eq:4}
+% J(\mathbf{\delta{x}}) = \frac{1}{2}(\mathbf{\delta{x}})^{T}\mathbf{z} + 
+% \frac{1}{2} \lbrace [(\mathbf{y}^{\prime{o}})^{T} - \mathbf{H}^{T}(\mathbf{\delta{x}})^{T}] \mathbf{R}^{-1}[\mathbf{y}^{\prime{o}} - \mathbf{H}(\mathbf{\delta{x}})] \rbrace
+% \end{equation}
+
+% \begin{equation}
+% \label{apII_eq:5}
+% J(\mathbf{\delta{x}}) = \frac{1}{2}(\mathbf{\delta{x}})^{T}\mathbf{z} + 
+% \frac{1}{2} \lbrace [(\mathbf{y}^{\prime{o}})^{T}\mathbf{R}^{-1} - \mathbf{H}^{T}\mathbf{R}^{-1}(\mathbf{\delta{x}})^{T}] [\mathbf{y}^{\prime{o}} - \mathbf{H}(\mathbf{\delta{x}})] \rbrace
+% \end{equation}
+
+% \begin{equation}
+% \label{apII_eq:6}
+% \begin{aligned}
+% J(\mathbf{\delta{x}}) = {} & \frac{1}{2}(\mathbf{\delta{x}})^{T}\mathbf{z} + 
+% \frac{1}{2}
+% \lbrace [
+% (\mathbf{y}^{\prime{o}})(\mathbf{y}^{\prime{o}})^{T}\mathbf{R}^{-1} -
+% (\mathbf{y}^{\prime{o}})^{T}\mathbf{R}^{-1}\mathbf{H}(\mathbf{\delta{x}}) \\ - 
+% & (\mathbf{y}^{\prime{o}})\mathbf{H}^{T}\mathbf{R}^{-1}(\mathbf{\delta{x}})^{T} +
+% \mathbf{H}\mathbf{H}^{T}\mathbf{R}^{-1}(\mathbf{\delta{x}})^{T}(\mathbf{\delta{x}})
+% ] \rbrace
+% \end{aligned}
+% \end{equation}
+
+% \begin{equation}
+% \label{apII_eq:7}
+%   \begin{aligned}
+% J(\mathbf{\delta{x}}) = {} & \frac{1}{2}(\mathbf{\delta{x}})^{T}\mathbf{z} + 
+% \frac{1}{2}(\mathbf{y}^{\prime{o}})(\mathbf{y}^{\prime{o}})^{T}\mathbf{R}^{-1} -
+% \frac{1}{2}(\mathbf{y}^{\prime{o}})^{T}\mathbf{R}^{-1}\mathbf{H}(\mathbf{\delta{x}}) \\ - 
+% & \frac{1}{2}(\mathbf{y}^{\prime{o}})\mathbf{H}^{T}\mathbf{R}^{-1}(\mathbf{\delta{x}})^{T} +
+% \frac{1}{2}\mathbf{H}\mathbf{H}^{T}\mathbf{R}^{-1}(\mathbf{\delta{x}})^{T}(\mathbf{\delta{x}})
+%   \end{aligned}
+% \end{equation}
+
+\begin{align}
+\label{apII_eq:4}
+J(\mathbf{\delta{x}}) & = \frac{1}{2}(\mathbf{\delta{x}})^{T}\mathbf{z} + 
+\frac{1}{2} \lbrace [(\mathbf{y}^{\prime{o}})^{T} - \mathbf{H}^{T}(\mathbf{\delta{x}})^{T}] \mathbf{R}^{-1}[\mathbf{y}^{\prime{o}} - \mathbf{H}(\mathbf{\delta{x}})] \rbrace \\
+\label{apII_eq:5}
+J(\mathbf{\delta{x}}) & = \frac{1}{2}(\mathbf{\delta{x}})^{T}\mathbf{z} + 
+\frac{1}{2} \lbrace [(\mathbf{y}^{\prime{o}})^{T}\mathbf{R}^{-1} - \mathbf{H}^{T}\mathbf{R}^{-1}(\mathbf{\delta{x}})^{T}] [\mathbf{y}^{\prime{o}} - \mathbf{H}(\mathbf{\delta{x}})] \rbrace
+\end{align}
+
+\begin{equation}
+\label{apII_eq:6}
+\begin{aligned}
+J(\mathbf{\delta{x}}) = {} & \frac{1}{2}(\mathbf{\delta{x}})^{T}\mathbf{z} + 
+\frac{1}{2}
+\lbrace [
+(\mathbf{y}^{\prime{o}})(\mathbf{y}^{\prime{o}})^{T}\mathbf{R}^{-1} -
+(\mathbf{y}^{\prime{o}})^{T}\mathbf{R}^{-1}\mathbf{H}(\mathbf{\delta{x}}) \\ - 
+& \mathbf{y}^{\prime{o}}\mathbf{H}^{T}\mathbf{R}^{-1}(\mathbf{\delta{x}})^{T} +
+\mathbf{H}\mathbf{H}^{T}\mathbf{R}^{-1}(\mathbf{\delta{x}})^{T}(\mathbf{\delta{x}})
+] \rbrace
+\end{aligned}
+\end{equation}
+
+\begin{equation}
+\label{apII_eq:7}
+  \begin{aligned}
+J(\mathbf{\delta{x}}) = {} & \frac{1}{2}(\mathbf{\delta{x}})^{T}\mathbf{z} + 
+\frac{1}{2}(\mathbf{y}^{\prime{o}})(\mathbf{y}^{\prime{o}})^{T}\mathbf{R}^{-1} -
+\frac{1}{2}(\mathbf{y}^{\prime{o}})^{T}\mathbf{R}^{-1}\mathbf{H}(\mathbf{\delta{x}}) \\ - 
+& \frac{1}{2}\mathbf{y}^{\prime{o}}\mathbf{H}^{T}\mathbf{R}^{-1}(\mathbf{\delta{x}})^{T} +
+\frac{1}{2}\mathbf{H}\mathbf{H}^{T}\mathbf{R}^{-1}(\mathbf{\delta{x}})^{T}(\mathbf{\delta{x}})
+  \end{aligned}
+\end{equation}
+
+Calculando o gradiente da Eq. \ref{apII_eq:7} em relação a $\mathbf{\delta{x}}$ (utilizando as ideias apresentadas no desenvolvimento da Eq. \ref{apI_eq:19}), obtemos:
+
+% \begin{equation}
+% \label{apII_eq:8}
+%   \begin{split}
+% \nabla_{\mathbf{\delta{x}}}J = 
+% \mathbf{z} - 
+% (\mathbf{y}^{\prime{o}})\mathbf{H}^{T}\mathbf{R}^{-1} +
+% \mathbf{H}\mathbf{H}^{T}\mathbf{R}^{-1}(\mathbf{\delta{x}})
+%   \end{split}
+% \end{equation}
+
+% \begin{equation}
+% \label{apII_eq:9}
+%   \begin{split}
+% \nabla_{\mathbf{\delta{x}}}J = 
+% \mathbf{z} + 
+% \mathbf{H}^{T}\mathbf{R}^{-1}
+% [
+% \mathbf{H}(\mathbf{\delta{x}}) - (\mathbf{y}^{\prime{o}})
+% ]
+%   \end{split}
+% \end{equation}
+
+\begin{align}
+\label{apII_eq:8}
+\nabla_{\mathbf{\delta{x}}}J & = \mathbf{z} - \mathbf{y}^{\prime{o}}\mathbf{H}^{T}\mathbf{R}^{-1} + \mathbf{H}\mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{\delta{x}} \\
+\label{apII_eq:9}
+\nabla_{\mathbf{\delta{x}}}J & = \mathbf{z} + \mathbf{H}^{T}\mathbf{R}^{-1}[
+\mathbf{H}(\mathbf{\delta{x}}) - \mathbf{y}^{\prime{o}}]
+\end{align}
+
+Da mesma forma, podemos partir da Eq. \ref{apII_eq:7} e calcular o gradiente em relação a $\mathbf{z}$. Mas temos que $\mathbf{z} = \mathbf{B}^{-1}\mathbf{\delta{x}}$, e portanto:
+
+\begin{equation}
+\label{apII_eq:10}
+  \begin{split}
+\mathbf{\delta{x}} = \mathbf{z}\mathbf{B}
+  \end{split}
+\end{equation}
+
+Substituindo a Eq. \ref{apII_eq:10} na Eq. \ref{apII_eq:7}, obtemos:
+
+\begin{equation}
+\label{apII_eq:11}
+  \begin{aligned}
+J(\mathbf{\delta{x}}) = {} & \frac{1}{2}(\mathbf{z}\mathbf{B})^{T}\mathbf{z} + 
+\frac{1}{2}(\mathbf{y}^{\prime{o}})(\mathbf{y}^{\prime{o}})^{T}\mathbf{R}^{-1} -
+\frac{1}{2}(\mathbf{y}^{\prime{o}})^{T}\mathbf{R}^{-1}\mathbf{H}(\mathbf{z}\mathbf{B}) \\ - 
+& \frac{1}{2}(\mathbf{y}^{\prime{o}})\mathbf{H}^{T}\mathbf{R}^{-1}(\mathbf{z}\mathbf{B})^{T} +
+\frac{1}{2}\mathbf{H}\mathbf{H}^{T}\mathbf{R}^{-1}(\mathbf{z}\mathbf{B})^{T}(\mathbf{z}\mathbf{B})
+  \end{aligned}
+\end{equation}
+
+O gradiente $\nabla_{\mathbf{z}}J$ é calculado, portanto, a partir da Eq. \ref{apII_eq:11}:
+
+% \begin{equation}
+% \label{apII_eq:12}
+%   \begin{split}
+% \nabla_{\mathbf{z}}J = 
+% \mathbf{B}\mathbf{z} -
+% (\mathbf{y}^{\prime{o}})\mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{B} +
+% \mathbf{H}\mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{B}(\mathbf{z}\mathbf{B})
+%   \end{split}
+% \end{equation}
+
+% \begin{equation}
+% \label{apII_eq:13}
+%   \begin{split}
+% \nabla_{\mathbf{z}}J = 
+% \mathbf{B}
+% [
+% \mathbf{z} -
+% (\mathbf{y}^{\prime{o}})\mathbf{H}^{T}\mathbf{R}^{-1} +
+% \mathbf{H}\mathbf{H}^{T}\mathbf{R}^{-1}(\mathbf{z}\mathbf{B})
+% ]
+%   \end{split}
+% \end{equation}
+
+% \begin{equation}
+% \label{apII_eq:14}
+%   \begin{split}
+% \nabla_{\mathbf{z}}J = 
+% \mathbf{B}
+% \lbrace
+% \mathbf{z} +
+% \mathbf{H}^{T}\mathbf{R}^{-1}
+% [
+% \mathbf{H}(\mathbf{z}\mathbf{B})
+% - (\mathbf{y}^{\prime{o}})
+% ]
+% \rbrace
+%   \end{split}
+% \end{equation}
+
+\begin{align}
+\label{apII_eq:12}
+\nabla_{\mathbf{z}}J & = \mathbf{B}\mathbf{z} - \mathbf{y}^{\prime{o}}\mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{B} +
+\mathbf{H}\mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{B}(\mathbf{z}\mathbf{B}) \\
+\label{apII_eq:13}
+\nabla_{\mathbf{z}}J & = \mathbf{B}[\mathbf{z} - \mathbf{y}^{\prime{o}}\mathbf{H}^{T}\mathbf{R}^{-1} +
+\mathbf{H}\mathbf{H}^{T}\mathbf{R}^{-1}(\mathbf{z}\mathbf{B})] \\
+\label{apII_eq:14}
+\nabla_{\mathbf{z}}J & = \mathbf{B}\lbrace\mathbf{z} + \mathbf{H}^{T}\mathbf{R}^{-1}[\mathbf{H}(\mathbf{z}\mathbf{B}) - \mathbf{y}^{\prime{o}}]\rbrace
+\end{align}
+
+Como $\mathbf{z}\mathbf{B}=\mathbf{\delta{x}}$, obtemos:
+
+\begin{equation}
+\label{apII_eq:15}
+  \begin{split}
+\nabla_{\mathbf{z}}J = 
+\mathbf{B}
+\lbrace
+\mathbf{z} +
+\mathbf{H}^{T}\mathbf{R}^{-1}
+[
+\mathbf{H}(\mathbf{\delta{x}})
+- \mathbf{y}^{\prime{o}}
+]
+\rbrace
+  \end{split}
+\end{equation}
+
+A expressão entre chaves na Eq. \ref{apII_eq:15} é a mesma que está do lado direito na Eq. \ref{apII_eq:9}, e portanto:
+
+\begin{equation}
+\label{apII_eq:16}
+  \begin{split}
+\nabla_{\mathbf{z}}J = \mathbf{B} \nabla_{\mathbf{\delta{x}}}J
+  \end{split}
+\end{equation}
+
+Este algoritmo é vantajoso porque nele não há a necessidade de se calcular explicitamente $\mathbf{B}^{-1}$ (e.g., Eq. \ref{apI_eq:21}), sendo necessária apenas uma transformação de variáveis.

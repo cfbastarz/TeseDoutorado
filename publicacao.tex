@@ -1,0 +1,74 @@
+\documentclass[
+PublicacaoDissOuTese,
+english,portuguese,
+LogoINPE,
+CCBYNC,
+]{conf/tdiinpe}
+
+% Pacotes já previamente carregados:
+% ifthen,calc,graphicx,color,inputenc,babel,hyphenat,array,setspace,
+% bigdelim,multirow,supertabular,tabularx,longtable,lastpage,lscape,
+% rotate,caption2,amsmath,amssymb,amsthm,subfigure,tocloft,makeidx,
+% eso-pic,calligra,hyperref,ae,fontenc 
+\usepackage{pdfpages}
+\usepackage{rotating}
+\usepackage{dsfont}
+\usepackage{comment}
+\usepackage{colortbl}
+\usepackage{textcomp}
+\usepackage{listings}
+\usepackage{overpic}
+\usepackage{adjustbox}
+\usepackage{booktabs}
+\usepackage{microtype}
+\usepackage[multidot]{grffile}
+
+\subfiguretopcaptrue % permite legendas acima das figuras
+
+\input{conf/configuracao} 
+
+\makeindex
+
+\begin{document}
+
+\maketitle 
+
+\include{docs/epigrafe}
+\include{docs/dedicatoria}
+\include{docs/agradecimentos}
+\include{docs/resumo}
+\include{docs/abstract}
+
+\includeListaFiguras
+\includeListaTabelas 
+
+\include{docs/abreviaturasesiglas} 
+
+\include{docs/simbolos} 
+
+\includeSumario
+
+\inicioIntroducao
+
+\include{docs/cap1/introducao}
+\include{docs/cap2/modelos_dados}
+\include{docs/cap3/matriz_B}
+\include{docs/cap4/assim_3densvar}
+\include{docs/cap5/resultados}
+\include{docs/cap6/conclusoes}
+
+%\bibliography{bib/referencias} 
+
+\inicioApendice
+
+\include{docs/aps/deriv_eq_anl}
+\include{docs/aps/precond_fcusto}
+\include{docs/aps/filtro_rec_1d_g1}
+\include{docs/aps/filtro_rec_1d_g2}
+%\include{docs/aps/conds_geradores}
+\include{docs/aps/artigo1}
+\include{docs/aps/artigo2}
+
+\include{docs/contracapa}
+
+\end{document}

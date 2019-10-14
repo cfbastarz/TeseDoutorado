@@ -1,0 +1,203 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{APÊNDICE E - Condições para validar Tensores de Aspecto através da escolha de Geradores Válidos}
+\label{apendiceVII}
+
+%\todo{Traduzir? Esta parte é mais difícil de ser inserida no texto; na tese, tenho que ter cuidado porque esta parte é um pouco mais detalhada.}
+
+Este apêndice traz algumas ideias simples que foram reunidas a partir de discussões sobre a validade dos tensores de aspecto da teoria proposta por \citeauthoronline{purser/1995} (1995) na nota técnica intitulada ``A Geometrical Approach to the Synthesis of Smooth Anisotropic Covariance Operators for Data Assimilation''. Os tensores de aspecto são definidos através de geradores em um tipo de geometria não-Euclidiana que define o domínio no qual as covariâncias são sintetizadas. Os geradores são entes da geometria definida e algumas condições para a sua validade são pesquisadas. 
+
+\begin{otherlanguage}{english}
+
+\begin{center}
+\section*{Conditions to validate Aspect Tensors through the choice of Valid Generators}
+\end{center}
+
+\textbf{Abstract:} Here are presented some insights regarding the necessary conditions to choose a valid aspect tensor through the choice of the right (and valid) generators.
+
+Let,
+
+\begin{equation}
+  \label{apVII_eq:1}
+  \mathbf{gg}^{T} =
+  \begin{bmatrix}
+  	a & b & c \\
+    d & e & f \\
+    g & h & i 
+  \end{bmatrix}
+\end{equation}
+
+be a valid aspect tensor. What is(are) the condition(s) that make it valid?
+
+Following \citeauthoronline{purser/1995} (1995), one condition to validate the generator ($\mathbf{g}$) is:
+
+\begin{equation}
+  \label{apVII_eq:2}
+	det(\mathbf{gg}^{T})=\pm 1
+\end{equation}
+
+Considering the condition \ref{apVII_eq:2}, the determinant of the matrix given is:
+
+\begin{equation}
+  \label{apVII_eq:3}
+	det(\mathbf{gg}^{T}) = a(ei - fg) + b(gf - di) + c(dh - eg) = 1
+\end{equation}
+
+Notice that the factors multiplying the coefficients $a$, $b$ and $c$ are the determinants of the \textit{minors} of the given matrix in \ref{apVII_eq:1}:
+
+\begin{equation}
+\label{apVII_eq:4}
+\begin{split}
+	det(M_{1,1}) = (ei - fg) \\
+	det(M_{1,2}) = (gf - di) \\
+	det(M_{1,3}) = (dh - eg)
+\end{split}
+\end{equation}
+
+\begin{theorem}
+If $det(M_{1,1})\neq0$, $det(M_{1,2})\neq0$ and $det(M_{1,3})\neq0$, then $det(\mathbf{gg}^{T})=0$.
+\end{theorem}
+
+\begin{proof}
+Let,
+$
+M_{1,1} =
+\begin{bmatrix}
+    e & f \\
+    h & i 
+\end{bmatrix}
+$
+then, $det(M_{1,1}) = (ei - fg)$, $\forall e, f, i \in \Re$.
+\end{proof}
+
+\begin{theorem}
+If the determinant of two minors of $\mathbf{gg}^{T}$ (e.g., $M_{1,1}$ and $M_{1,2}$, $M_{1,1}$ and $M_{1,3}$, $M_{1,2}$ and $M_{1,3}$) are zero and the other is non-zero, then $det(\mathbf{gg}^{T})=\pm 1$, iff:
+
+\begin{itemize}
+	\item $a = det(M_{1,1}) = \pm 1$
+	\item $ei = \pm 1$ and $fh = 0$, so $a = ei = \pm 1$
+	\item $ei = 0$ and $fh = \mp 1$, so $a = fh = \mp 1$
+\end{itemize}
+\end{theorem}
+
+\begin{proof}
+Let,
+$
+\mathbf{gg}^{T} =
+\begin{bmatrix}
+	a & b & c \\
+    d & e & f \\
+    g & h & i 
+\end{bmatrix}
+$
+then, $det(\mathbf{gg}^{T}) = a(ei - fg) + b(gf - di) + c(dh - eg)$.
+\end{proof}
+
+Now let the minor,
+$
+M_{1,1} =
+\begin{bmatrix}
+    e & f \\
+    h & i 
+\end{bmatrix}
+$
+then, $det(M_{1,1}) = ei - fh$ and $det(M_{1,1}) = 0$ iff $e = f = h = i, \forall e, f, h, i \in \Re$.
+
+The same can be verified for the elements of the minor $M_{1,2}$ and $M_{1,3}$.
+
+Now, considering that $det(M_{1,2}) = det(M_{1,3}) = 0$, then $\mathbf{gg}^{T}$ would look like:
+$
+\mathbf{gg}^{T} =
+\begin{bmatrix}
+	a & b & c \\
+    0 & 0 & 0 \\
+    0 & 0 & 0 
+\end{bmatrix}
+$
+with $f=g=d=i=h=e=0$. This is a case where $\mathbf{gg}^{T}$ is a tensor somewhere outside the valid region of the geometric domain. But it is also invalid because of the generators:
+$
+\mathbf{g} =
+\begin{bmatrix}
+	1 \\
+    0 \\
+    0 
+\end{bmatrix}
+$
+and
+$
+\mathbf{g}^{T} =
+\begin{bmatrix}
+	1 & b & c 
+\end{bmatrix}
+$
+but $det(M_{1,1}) \neq 1$, then
+$
+\mathbf{gg}^{T} =
+\begin{bmatrix}
+	a & b & c \\
+    0 & x & y \\
+    0 & z & w 
+\end{bmatrix}
+$
+with $det(\mathbf{gg}^{T}) = axw - ayz = a(xw - yz) = a det(M_{1,1})$. In this case, $det(M_{1,1})$ relies only on the determinant of the minor $M_{1,1}$.
+
+To make $det(\mathbf{gg}^{T}) \neq 0$, we only require one minor with non-zero elements, i.e.,
+$
+\mathbf{gg}^{T} =
+\begin{bmatrix}
+	a & b & c \\
+    0 & x & y \\
+    0 & z & w 
+\end{bmatrix}
+$
+with $det = axz - awy = a(xz - wy) = a det(M_{1,1})$;
+$
+\mathbf{gg}^{T} =
+\begin{bmatrix}
+	a & b & c \\
+    x & 0 & y \\
+    z & 0 & w 
+\end{bmatrix}
+$
+with $det = byw - bxz = b(yw - xz) = b det(M_{1,2})$;
+$
+\mathbf{gg}^{T} =
+\begin{bmatrix}
+	a & b & c \\
+    x & y & 0 \\
+    z & w & 0 
+\end{bmatrix}
+$
+with $det = xzc - wyc = c(xz - wy) = a det(M_{1,3}) = a det(M_{1,1})$.
+
+Still, in order to have $\mathbf{gg}^{T}$ as a valid tensor (through valid generators), $det(\mathbf{gg}^{T}) = \pm 1$, i.e.,
+\begin{itemize}
+\item 
+$
+\begin{cases}
+a \times det(M_{1,1}) = 1 \\
+a \times det(M_{1,1}) = -1
+\end{cases}
+$
+iff $a = [det(M_{1,1})]^{-1}$ or $a = -[det(M_{1,1})]^{-1}$ which implies $a = xz = \pm 1$ and $wy = 0$, $a = wy = \mp 1$ and $xz = 0$.
+\item
+$
+\begin{cases}
+b \times det(M_{1,2}) = 1 \\
+b \times det(M_{1,2}) = -1
+\end{cases}
+$
+iff $b = [det(M_{1,2})]^{-1}$ or $a = -[det(M_{1,2})]^{-1}$ which implies $b = xz = \pm 1$ and $wy = 0$, $b = wy = \mp 1$ and $xz = 0$.
+\item
+$
+\begin{cases}
+c \times det(M_{1,3}) = 1 \\
+c \times det(M_{1,3}) = -1
+\end{cases}
+$
+iff $c = [det(M_{1,3})]^{-1}$ or $a = -[det(M_{1,3})]^{-1}$ which implies $c = xz = \pm 1$ and $wy = 0$, $c = wy = \mp 1$ and $xz = 0$.
+\end{itemize}
+
+For all the cases, at least the main column of the minors must be non-zero. Consequently, any identity matrix should be a valid minor.
+
+\end{otherlanguage}
